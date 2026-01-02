@@ -11,4 +11,4 @@ every analysis is not just accurate, but relevant to business operations.
 This repository is organized by project. Each project resides in its own dedicated directory. The main branches are:
 
 main: The primary, stable branch for current work and documentation.
-develop: The development branch for ongoing projects .
+development: The development branch for ongoing projects .
