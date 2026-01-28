@@ -1,0 +1,9 @@
+2026-01-28-19:47:41 : Initialating ETL process
+2026-01-28-19:48:17 : Initialating ETL process
+2026-01-28-19:50:44 : Initialating ETL process
+2026-01-28-19:50:47 : Data Extraction complete, Initiating Transform Process
+2026-01-28-19:50:47 : Data transformation complete. Initiaing Loading process
+2026-01-28-19:50:47 : SQL Connection initiated
+2026-01-28-19:50:47 : Data loaded to Database as a table, Executing queries
+2026-01-28-19:50:47 : Process Complete
+2026-01-28-19:50:47 : Server Connection closed
