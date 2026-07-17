@@ -6,7 +6,7 @@ const Heading = ({children}) =>{
     const Tag = `h${actualLevel}`;
     return (
         <>
-        <Tag>{children}</Tag>;
+        <Tag>{children}</Tag>
         </>
     )
 }

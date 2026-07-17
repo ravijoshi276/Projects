@@ -101,8 +101,8 @@ export const  CartProvider=({children})=> {
         let newCart = [];
         const existingItem = cart.find((item)=> item.id===productid); 
         let targetQuantity = existingItem.quantity-1;
-        console.log(targetQuantity)
-        newCart = cart.map((item)=> item.id===productid? {...item,unit_price:price,price:price,title:title,quantity:targetQuantity}:item);
+
+        newCart = cart.map((item)=> item.id===productid? {...item,unit_price:price,price:price*targetQuantity,title:title,quantity:targetQuantity}:item);
         //Checking if any quantity becomes zero
         
         setCart(newCart.filter((item)=>item.quantity>0));

@@ -134,7 +134,7 @@ a:focus-visible {
   gap:2%;
 }
 .btn{
-text-align: center;
+  text-align: center;
   background: var(--bg-container);
   box-shadow: var(--shadow-color) 2px 2px 3px 0px;
   border: var(--color-primary) 1px solid;
@@ -155,10 +155,11 @@ text-align: center;
   padding: 2%;
   transition: color 1s ease-in-out, transform .5s ease-in-out;
 }
-.header-buttons a:hover:not(.cart), .btn:hover{
+.header-buttons a:hover:not(.cart), .btn:hover:not(:disabled){
  color: var(--color-secondary);
  transform: scale(105%);
 }
+
 .card-cover{
   padding: 2px;
 }
@@ -173,6 +174,7 @@ text-align: center;
   text-align: center;
   transform: scale(0.60);
 }
+
 
 /* Nav bar */
 nav{
@@ -241,22 +243,44 @@ nav > a.active {
   height: auto;
   width: 100%;;
 }
+/*Menu page */
 .cards {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 50px;
+  flex-wrap: wrap;
   
 }
+.card > div{
+  width: 40%;
+}
 .item-card{
+  display: flex;
+  flex-flow: row-reverse;
   border: 2px solid var(--border-color);
   padding: 5px;
-  width: 200px;
+  width: clamp(300px,400px,500px);
   border-radius: 10px;
+  justify-content: space-between;
 }
 .menuitems{
   margin: 0 5vw ;
 }
+.btn-group{
+display: flex;
+width: 100%;
+border: 2px solid red;
+justify-content: flex-end;
+}
+.addtocart,.gotocart{
+  transform: scale(.7);
+  
+}
+.addtocart{
+   align-self: flex-end;
+}
+
 .menu-item-heading{
   border-bottom: var(--border-color) 3px solid;
   width: 100%;

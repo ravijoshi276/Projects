@@ -4,10 +4,11 @@ import Heading from './Heading';
 import placeholder_image from "./assets/images/menuitem-placeholder.png"
 import { useCart } from './context/CartContext';
 import { NavLink } from 'react-router';
-
+import { useAuth } from './context/AuthContext';
 
 
 export default function MenuPage(){
+const {group,user}= useAuth();
 const [menuData,setmenuData]  = useState(null);
 const [categoryData,setcategoryData]  = useState(null);
 const [loading,setloading] = useState(true);

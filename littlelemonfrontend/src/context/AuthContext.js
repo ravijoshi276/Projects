@@ -5,6 +5,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({children})=>{
     const [token,setToken]= useState(()=>localStorage.getItem('authToken'));
     const [user,setUser] = useState({first_name:null,last_name:null});
+    const [group,setGroup] = useState(null);
     const [loading,setLoading] = useState(true);
     const isLoggedIn = !!token;
    const fetchtUser = async(authtoken) =>{
@@ -28,12 +29,24 @@ export const AuthProvider = ({children})=>{
             setLoading(false);
         } 
     }
+   
 
-    const login = async (newToken)=>{
-            localStorage.setItem('authToken',newToken);
-            setToken(newToken);
+    const login = async (data)=>{
+            localStorage.setItem('authToken',data.auth_token);
+            let groups = data.groups;
+          
+            if(groups.length>=0){
+            if(groups.find(item=>item=="Manager")){
+                setGroup('manager');
+            }else if (groups.find(item=>item=="Delivery Crew")){
+                setGroup("deliverycrew")
+            }else{
+                setGroup('user')
+            }
+            }
+            setToken(data.auth_token);
             setLoading(true);
-            await fetchtUser(newToken);
+            await fetchtUser(data.auth_token);
         };
     const logout =()=>{
         localStorage.removeItem('authToken');
@@ -44,13 +57,14 @@ export const AuthProvider = ({children})=>{
     useEffect(()=>{
         if(token){
             fetchtUser(token);
+            
         }else{
             setLoading(false);
         }
     },[token]);
 
     return(
-        <AuthContext.Provider value ={{token,login,isLoggedIn,logout,user,loading}}>
+        <AuthContext.Provider value ={{token,login,isLoggedIn,logout,user,loading,group}}>
             {children}
         </AuthContext.Provider>
     );

@@ -5,7 +5,7 @@ const LoginForm =()=>{
     const [credentials,setCredentials]= useState({
         username:'',password:''
     });
-    const {login} = useAuth();
+    const {login,group} = useAuth();
     const [error,setError]=useState(false);
     const navigate = useNavigate();
     const resetCredentials = ()=>{
@@ -32,11 +32,18 @@ const LoginForm =()=>{
                 throw new Error(`Server responded with  status : ${response.status}`);
             }
             const data = await response.json();
-            login(data.auth_token);
+            login(data);
             resetCredentials();
-            navigate('/');
+            if(group==="user"){
+                navigate('/menu-items');
+            }else if(group==="deliverycrew"){
+                navigate('/')
+            }else{
+                navigate('/about-me');
+            }
             setError(false);
             console.log("Success! Server Response: ",data);
+            
         }catch(err){
             setError(true);
             console.error(err.message);
