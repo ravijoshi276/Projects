@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from decimal import Decimal
-from djoser.serializers import UserCreatePasswordRetypeSerializer
+from djoser.serializers import UserCreatePasswordRetypeSerializer,TokenSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from .models import Category, MenuItem, Cart, Order, OrderItem
 
@@ -123,3 +123,8 @@ class CustomUserSerializer(BaseUserSerializer):
             # Fallback for last_name (keeps it clean instead of returning null)
             if not representation.get('last_name'):
                 representation['last_name'] = ""
+
+class CustomTokenSerializer(TokenSerializer):
+    groups = serializers.SlugRelatedField(read_only =True,slug_field='name',source ='user.groups',many=True)
+    class Meta(TokenSerializer.Meta):
+        fields = ('auth_token','groups')

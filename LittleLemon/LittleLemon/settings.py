@@ -164,6 +164,7 @@ DJOSER = {
     'SERIALIZERS': {
         'user_create_password_retype': 'LittleLemonDRF.serializers.UserCreationSerializer',
         'current_user': 'LittleLemonDRF.serializers.CustomUserSerializer',
+        'token': 'LittleLemonDRF.serializers.CustomTokenSerializer',
     },
 }
 
