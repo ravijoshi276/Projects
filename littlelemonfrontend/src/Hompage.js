@@ -7,8 +7,8 @@ export default function Homepage () {
     const {isLoggedIn,user,loading}= useAuth();
     return(
         <main>
-             {isLoggedIn?<div className="welcome-message">Welcome  {loading?"Loading....":user.first_name} !!!</div>:""}
-            <Heading>Welcome to Little Lemon! Experience the true taste of authentic local flavors</Heading>
+             {isLoggedIn?<div className="welcome-message">Welcome  <span className="lemon">{loading?"Loading....":user.first_name} !!!</span></div>:""}
+            <Heading>Welcome to <span className="lemon">Little Lemon!</span> Experience the true taste of authentic local flavors</Heading>
             {/*hero Section */}
            
             <Section sectionclass='hero'>
@@ -18,9 +18,9 @@ export default function Homepage () {
                     <p className="subheading">
                         A seasonal rotation of Italian, Greek, and Turkish flavors in the heart of Chicago
                     </p>
-                    <div>
-                    <Link to='/menu-items' className="cta-btn">Checkout our menu</Link>
-                    <Link to='/book-table' className="cta-btn">Book a table</Link>
+                    <div className="cta-btn-group">
+                    <Link to='/menu-items' className="btn cta-btn ">Checkout Menu</Link>
+                    <Link to='/book-table' className="btn cta-btn ">Book a table</Link>
                     </div>
                     {/*Hero Image*/}
                     <div className="imger-cover">
