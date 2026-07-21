@@ -64,10 +64,10 @@ const cards = categoryData ? categoryData.results.map( category=>{
 
 ): "<div>No data</div>";
 return (
-    <>
+    <main>
     <Heading>Menu Items</Heading>
     {loading||(cards.length <0)?"Loading...":cards}   
-    </>
+    </main>
 )
 }
 
@@ -82,10 +82,10 @@ let Card =({id,title,image,description,price,addfunc})=>{
             <div className='image-cover'>
                 <img src={image?image:placeholder_image} alt={image?title:'placeholder'}/>
             </div>
-            <div>
+            <div className='item-details'>
                 <h3>{title}</h3>
                 <p className='description'>{description}</p>
-                <p className='price'>${price}</p>
+                <p className='item-price'><span className='price bold'>Price</span><span>${price}</span></p>
                 <div className='btn-group'>
                 {isAdded?<NavLink className='btn gotocart'to='/cart'>Go to Cart</NavLink>:""}
                 <button className="btn addtocart"onClick={handleClick} disabled = {isAdded}>{isAdded?"Added to Cart":"Add to Cart"}</button>

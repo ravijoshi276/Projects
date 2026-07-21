@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate,NavLink } from "react-router";
 
 function SignupForm(){
     const [formdata,setFromdata]=useState({
@@ -11,6 +11,7 @@ function SignupForm(){
         re_password:''
     })
     const [error,setError] = useState(false);
+    const [errorMessage,setErrormessage]= useState(false);
     const navigate = useNavigate();
     const [validatepassword,setValidatepassword] = useState(true);
     const validatePassword = (e)=>{
@@ -34,11 +35,9 @@ function SignupForm(){
                 },
                 body : JSON.stringify(formdata),
             });
-            if (!response.ok){
-                throw new Error(`Server responded with :  ${response.status}`);
-                setError(true);
-            }
-            setFromdata({first_name:'',
+            if (response.ok){
+                
+        setFromdata({first_name:'',
         last_name:'',
         username:'',
         email:'',
@@ -46,23 +45,31 @@ function SignupForm(){
         re_password:''
     })
             navigate('/login');
+            }else{
+                setErrormessage(response.body);
+                throw new Error(`Some Error occured ${response}`);
+            }
             
-        }
-
-    catch(err){
+        }catch(err){
+            console.log("This is msg",errorMessage);
+        setError(true);
+        console.log(err);
         
-    }
-}
+            }
+        }
+    
+
     return(
-        <div>
+        <main>
             <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit} className="signup-from form">
+            <form onSubmit={handleSubmit} className="signup-form form">
                 <div>
-                    <label for='username'>Username</label>
+                    <label className="required" for='username'>Username</label>
                     <input type="text" name='username' id='username' className="required" value={formdata.username} onChange={handleChange} required></input>
                 </div>
+                {errorMessage?<div className="error">Username already exists</div>:""}
                 <div>
-                    <label for='firstname'>First Name: </label>
+                    <label className="required" for='firstname'>First Name: </label>
                     <input type="text" name='first_name' id='firstname' className="required" value={formdata.first_name} onChange={handleChange} required></input>
                 </div>
                 <div>
@@ -70,21 +77,23 @@ function SignupForm(){
                     <input type="text" name='last_name' id='lastname' value={formdata.last_name} onChange={handleChange} ></input>
                 </div>
                 <div>
-                    <label for='email'>Email: </label>
+                    <label className="required" for='email'>Email: </label>
                     <input type="email" name='email' id='email' value={formdata.email} onChange={handleChange} required></input>
                 </div>
                 <div>
-                    <label for='password'>Password: </label>
+                    <label className="required" for='password'>Password: </label>
                     <input type="password" name='password' id='password' value={formdata.password} onChange={handleChange} required></input>
                 </div>
                 <div>
-                    <label for='re_password'>Re-type Password: </label>
+                    <label className="required" for='re_password'>Re-type Password: </label>
                     <input type="password" name='re_password' id='re_password' value={formdata.re_password} onChange={handleChange} onBlur={validatePassword} required></input>
-                    <div>{validatepassword?"":"password do not match"}</div>
                 </div>
-                <button type="submit" disabled={!(formdata.username && formdata.first_name && formdata.email && formdata.password && validatepassword )}>Sign Up</button>
+                <div className="error">{validatepassword?"":"password do not match"}</div>
+                {error?<p className="error">Some error occured</p>:""}
+                <button type="submit" disabled={!(formdata.username && formdata.first_name && formdata.email && formdata.password && validatepassword )} className="signup-btn">Create Account</button>
+                <p>Already have an account?? <NavLink to='/login'>Login</NavLink></p>
             </form>
-        </div>
+        </main>
     )
 }
 

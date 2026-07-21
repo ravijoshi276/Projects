@@ -3,13 +3,14 @@ import { NavLink, useNavigate } from 'react-router';
 import { useAuth } from "./context/AuthContext";
 import { useCart } from './context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCartShopping}  from '@fortawesome/free-solid-svg-icons'
-
+import {faCartShopping,faLightbulb}  from '@fortawesome/free-solid-svg-icons'
+import { useTheme } from './context/ThemeContext';
 
 const Header =({children})=>{
     const navigate =useNavigate(null);
     const {isLoggedIn,logout,token} =useAuth();
     const  {itemCount} =useCart();
+    const {theme,toggleTheme} = useTheme();
     const handleLogout = async()=>{
         try{
             const response = await fetch('http://localhost:8000/auth/token/logout',{
@@ -34,6 +35,7 @@ const Header =({children})=>{
         <div className='logocover'><img src={logo} alt='LittleLemon Logos'></img></div>
         
         <div className='header-buttons'>
+            <div className='theme-button-cover'><button className='theme-toggle-btn' onClick={()=>toggleTheme(theme)}><FontAwesomeIcon icon={faLightbulb} size='lg' className='cart'/></button></div>
             {isLoggedIn?<button className='btn' onClick={handleLogout}>Log Out</button>:(<div className='login-btns'>    
             <NavLink to='/login'>Login</NavLink>
             <NavLink to='/sign-up'>Sign Up</NavLink>

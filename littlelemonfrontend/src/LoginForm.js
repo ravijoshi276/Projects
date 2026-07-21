@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "./context/AuthContext";
+import Heading from "./Heading";
 const LoginForm =()=>{
     const [credentials,setCredentials]= useState({
         username:'',password:''
@@ -51,23 +52,25 @@ const LoginForm =()=>{
         
     }
      
-    return(
-        <div>
-            <h1>Login !!!</h1>
+    return(<main>
+        
+            <Heading>Login !!!</Heading>
             <form className="login-form form" onSubmit={handleSubmit}>
                 <div>
                     <label for='username'>Username: </label>
                     <input name="username" type="text" id='username' value={credentials.username} onChange={handleChange}/>
                 </div>
                 <div>
-                        <label for='password'>password: </label>
+                        <label for='password'>Password: </label>
                         <input name="password" type="password" id='password' value={credentials.password} onChange={handleChange}/>
                 </div>
-                <div className="error message">{error?"invalid id or password":""}</div>
-                <button  disabled={!(credentials.password && credentials.username)}>Login</button>
+                <div className="error error-message bold">{error?"invalid id or password":""}</div>
+                <button  disabled={!(credentials.password && credentials.username)} className="login-btn">Login</button>
+                <p>Dont have an account?? <NavLink to='/sign-up'>Sign Up</NavLink></p>
             </form>
 
-        </div>
+    
+        </main>
     )
 }
 
