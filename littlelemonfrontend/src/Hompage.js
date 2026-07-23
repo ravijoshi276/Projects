@@ -4,10 +4,10 @@ import { Link } from "react-router"
 import { useAuth } from "./context/AuthContext";
 
 export default function Homepage () {
-    const {isLoggedIn,user,loading}= useAuth();
+    const {isLoggedIn,user,loading,group}= useAuth();
     return(
         <main>
-             {isLoggedIn?<div className="welcome-message">Welcome  <span className="lemon">{loading?"Loading....":user.first_name} !!!</span></div>:""}
+             {isLoggedIn?<div className="welcome-message">Welcome {group} <span className="lemon">{loading?"Loading....":user.first_name} !!!</span></div>:""}
             <Heading>Welcome to <span className="lemon">Little Lemon!</span> Experience the true taste of authentic local flavors</Heading>
             {/*hero Section */}
            
@@ -23,7 +23,7 @@ export default function Homepage () {
                     <Link to='/book-table' className="btn cta-btn ">Book a table</Link>
                     </div>
                     {/*Hero Image*/}
-                    <div className="imger-cover">
+                    <div className="image-cover">
                     <img src={require('./assets/images/heroimage.jpg')} alt='Little Lemon restaurant'/>
                     </div>
             </Section> 
