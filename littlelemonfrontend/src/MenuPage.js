@@ -8,7 +8,7 @@ import { useAuth } from './context/AuthContext';
 
 
 export default function MenuPage(){
-const {group,user}= useAuth();
+const {group,user,isLoggedIn}= useAuth();
 const [menuData,setmenuData]  = useState(null);
 const [categoryData,setcategoryData]  = useState(null);
 const [loading,setloading] = useState(true);
@@ -56,7 +56,7 @@ const cards = categoryData ? categoryData.results.map( category=>{
     <Section sectionclass={'menuitems'} key={category.id}>
         <div  className='menu-item-heading'><Heading>{category.title}</Heading></div> 
         <div className= "cards">
-        {menuData.results.filter(item => item.category === category.id?true:false).map(item=><Card title={item.title} price={item.price} image={item.image ||null} description={item.image ||null} addfunc={addToCart} id ={item.id}/>)}
+        {menuData.results.filter(item => item.category === category.id?true:false).map(item=><Card title={item.title} price={item.price} image={item.image ||null} description={item.image ||null} addfunc={addToCart} id ={item.id} loggedin ={isLoggedIn}/>)}
         </div>
     </Section>
     )
@@ -71,7 +71,7 @@ return (
 )
 }
 
-let Card =({id,title,image,description,price,addfunc})=>{
+let Card =({id,title,image,description,price,addfunc,loggedin})=>{
   const [isAdded,setIsAdded] = useState(false);  
   const handleClick = () =>{
     setIsAdded(!isAdded);
@@ -87,8 +87,8 @@ let Card =({id,title,image,description,price,addfunc})=>{
                 <p className='description'>{description}</p>
                 <p className='item-price'><span className='price bold'>Price</span><span>${price}</span></p>
                 <div className='btn-group'>
-                {isAdded?<NavLink className='btn gotocart'to='/cart'>Go to Cart</NavLink>:""}
-                <button className="btn addtocart"onClick={handleClick} disabled = {isAdded}>{isAdded?"Added to Cart":"Add to Cart"}</button>
+                {!loggedin?<span className='lemon msg'>Login to add to cart</span>:isAdded?<NavLink className='btn gotocart'to='/cart'>Go to Cart</NavLink>:""}
+                <button className="btn addtocart"onClick={handleClick} disabled = {isAdded||!loggedin}>{isAdded?"Added to Cart":"Add to Cart"}</button>
                 </div>
             </div>
 

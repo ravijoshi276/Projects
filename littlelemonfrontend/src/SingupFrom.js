@@ -12,6 +12,7 @@ function SignupForm(){
     })
     const [error,setError] = useState(false);
     const [errorMessage,setErrormessage]= useState(false);
+    const [isSubmitted,setIsSubmitted]= useState(false);
     const navigate = useNavigate();
     const [validatepassword,setValidatepassword] = useState(true);
     const validatePassword = (e)=>{
@@ -35,8 +36,9 @@ function SignupForm(){
                 },
                 body : JSON.stringify(formdata),
             });
+            const data = await response.json();
             if (response.ok){
-                
+                setIsSubmitted(true);
         setFromdata({first_name:'',
         last_name:'',
         username:'',
@@ -44,14 +46,18 @@ function SignupForm(){
         password:'',
         re_password:''
     })
-            navigate('/login');
+        //Navigate to login page after 3 seconds
+        setTimeout(()=>{navigate('/login');},3000);
+            
             }else{
-                setErrormessage(response.body);
+                
+                console.log(data);
+                setErrormessage(data);
                 throw new Error(`Some Error occured ${response}`);
             }
             
         }catch(err){
-            console.log("This is msg",errorMessage);
+    
         setError(true);
         console.log(err);
         
@@ -62,12 +68,13 @@ function SignupForm(){
     return(
         <main>
             <h1>Sign Up</h1>
+            {(isSubmitted && !error) ?<div className={isSubmitted?"success alert submitted ":"success alert"}>Account Created In succesfully</div>:""}
             <form onSubmit={handleSubmit} className="signup-form form">
                 <div>
                     <label className="required" for='username'>Username</label>
                     <input type="text" name='username' id='username' className="required" value={formdata.username} onChange={handleChange} required></input>
                 </div>
-                {errorMessage?<div className="error">Username already exists</div>:""}
+                {error&&errorMessage.username?<div className="error">{errorMessage.username[0]}</div>:""}
                 <div>
                     <label className="required" for='firstname'>First Name: </label>
                     <input type="text" name='first_name' id='firstname' className="required" value={formdata.first_name} onChange={handleChange} required></input>
@@ -89,7 +96,7 @@ function SignupForm(){
                     <input type="password" name='re_password' id='re_password' value={formdata.re_password} onChange={handleChange} onBlur={validatePassword} required></input>
                 </div>
                 <div className="error">{validatepassword?"":"password do not match"}</div>
-                {error?<p className="error">Some error occured</p>:""}
+                {error && ! errorMessage.username[0]?<p className="error">Some error occured</p>:""}
                 <button type="submit" disabled={!(formdata.username && formdata.first_name && formdata.email && formdata.password && validatepassword )} className="signup-btn">Create Account</button>
                 <p>Already have an account?? <NavLink to='/login'>Login</NavLink></p>
             </form>

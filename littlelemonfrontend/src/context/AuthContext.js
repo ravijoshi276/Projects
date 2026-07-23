@@ -33,17 +33,18 @@ export const AuthProvider = ({children})=>{
 
     const login = async (data)=>{
             localStorage.setItem('authToken',data.auth_token);
-            let groups = data.groups;
-          
-            if(groups.length>=0){
-            if(groups.find(item=>item=="Manager")){
-                setGroup('manager');
-            }else if (groups.find(item=>item=="Delivery Crew")){
-                setGroup("deliverycrew")
-            }else{
-                setGroup('user')
+            const groups = data.groups;
+            let detectedgroup = 'user';
+            
+            if(groups.length>0){
+            if(groups.includes("Manager")){
+                detectedgroup='manager';
+            }else if (groups.includes("Delivery Crew")){
+                detectedgroup="deliverycrew";
             }
             }
+            setGroup(detectedgroup);
+            console.log('auth',group);
             setToken(data.auth_token);
             setLoading(true);
             await fetchtUser(data.auth_token);
@@ -52,6 +53,7 @@ export const AuthProvider = ({children})=>{
         localStorage.removeItem('authToken');
         setToken(null);
         setUser(null);
+        setGroup(null);
 }
     //Automatically fetches user profile if token exists
     useEffect(()=>{

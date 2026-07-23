@@ -11,7 +11,7 @@ export const  CartProvider=({children})=> {
     const [cart,setCart]=useState([]);
     const [loading,setLoading] = useState(false);
     const [itemCount,setItemCount]= useState(0);
-
+    const [total,setTotal]=useState(0);
     //Getting Cart Details
     useEffect(()=>{
         if(!token && !user){
@@ -45,7 +45,7 @@ export const  CartProvider=({children})=> {
                 };
                 
             })
-           
+            setTotal(fullCartDetails.reduce((sum,product)=>{return sum+product.price},0));
             setCart(fullCartDetails);
         } catch (err){
             console.error("Error building stiched cart");
@@ -74,6 +74,7 @@ export const  CartProvider=({children})=> {
             updatedCart = [...cart,{id:productid,quantity:1,unit_price:price,title:title,price:price,image:image}];
         }
         setCart(updatedCart);
+        setTotal(prev=>total+Number(price));
         try{
            
                 await cartApi.updateCart(token,{menuitem:productid,unit_price:price,quantity:targetQuantity})
@@ -85,10 +86,12 @@ export const  CartProvider=({children})=> {
     
     }
     const deleteFromCart =async (productid)=>{
+        const existingitem = cart.find(item=>item.id===productid);
         setCart((prevCart)=>{
             return prevCart.filter((item)=>item.id !== productid);
         })
         setItemCount(prev=>prev-1);
+        setTotal(prev=>prev - Number(existingitem.price));
         try {
             await cartApi.updateCart(token,{menuitem:productid,unit_price:0,quantity:0})
         }catch(err){
@@ -104,7 +107,7 @@ export const  CartProvider=({children})=> {
 
         newCart = cart.map((item)=> item.id===productid? {...item,unit_price:price,price:price*targetQuantity,title:title,quantity:targetQuantity}:item);
         //Checking if any quantity becomes zero
-        
+        setTotal(prev=>prev-Number(price));
         setCart(newCart.filter((item)=>item.quantity>0));
         if(targetQuantity<=0){
             setItemCount(prev=>prev-1);
@@ -117,6 +120,9 @@ export const  CartProvider=({children})=> {
             console.error("Failed to delete from cart");
         }
         };
+    
+        
+        
    
     //Detailed cart
    const clearCart = async() => {
@@ -125,7 +131,7 @@ export const  CartProvider=({children})=> {
     await cartApi.deleteCart(token);
    }
 
-   return <CartContext.Provider value={{cart,itemCount,addToCart,deleteFromCart,clearCart,removFromCart,loading}} >
+   return <CartContext.Provider value={{cart,itemCount,addToCart,deleteFromCart,clearCart,removFromCart,loading,total}} >
     {children}
    </CartContext.Provider>
 }

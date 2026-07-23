@@ -8,6 +8,7 @@ const LoginForm =()=>{
     });
     const {login,group} = useAuth();
     const [error,setError]=useState(false);
+    const [isSubmitted,setIsSubmitted]=useState(false);
     const navigate = useNavigate();
     const resetCredentials = ()=>{
         setCredentials((prev)=>({...prev,username:'',password:''
@@ -32,19 +33,20 @@ const LoginForm =()=>{
                 
                 throw new Error(`Server responded with  status : ${response.status}`);
             }
+            setIsSubmitted(true);
             const data = await response.json();
             login(data);
             resetCredentials();
-            if(group==="user"){
+            setTimeout(()=>{
+            if(data.groups.length===0){
                 navigate('/menu-items');
-            }else if(group==="deliverycrew"){
+            }else if(data.groups.includes("Delivery Crew")){
                 navigate('/')
             }else{
                 navigate('/about-me');
             }
             setError(false);
-            console.log("Success! Server Response: ",data);
-            
+        },3000);
         }catch(err){
             setError(true);
             console.error(err.message);
@@ -53,8 +55,8 @@ const LoginForm =()=>{
     }
      
     return(<main>
-        
             <Heading>Login !!!</Heading>
+            {(isSubmitted && !error) ?<div className={isSubmitted?"success alert submitted ":"success alert"}>Logged In succesfully</div>:""}
             <form className="login-form form" onSubmit={handleSubmit}>
                 <div>
                     <label for='username'>Username: </label>
