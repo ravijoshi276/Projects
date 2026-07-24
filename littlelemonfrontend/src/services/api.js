@@ -52,6 +52,44 @@ const cartApi ={
         }
         return []
     }
+}
+const ordersApi={
+    orderItems : async (token)=>{
+        const response = await fetch("http://127.0.0.1:8000/api/orders",{
+            method: 'POST',
+            headers : makeHeaders(token),
+         
+        })
+        if(!response.ok){
+            throw new Error('Failed to create order');
+        }
+
+    },
+    getOrders : async (token)=>{
+        const response = await fetch("http://127.0.0.1:8000/api/orders",{
+            method: 'GET',
+            headers : makeHeaders(token),
+         
+        })
+        if(!response.ok){
+            throw new Error('Failed to get order');
+        }
+        return  response.json();
+
+    },
+    getAllOrders : async(orderItems)=>{
+        const itemIds = orderItems.results.map(item=>item.orderitem.menuitem);
+        if(itemIds.length===0){
+            return []
+        }
+        const newitemsids=[...new Set(itemIds)];
+        const ids = newitemsids.join(',');
+        console.log(ids);
+        const response = await fetch(`http://127.0.0.1:8000/api/menu-items?ids=${ids}`);
+        if (!response.ok) throw new Error('Failed to fetch cart products')
+        return  response.json();
+    }
 
 }
-export default cartApi;
+
+export {ordersApi, cartApi};

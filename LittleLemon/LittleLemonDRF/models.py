@@ -37,12 +37,12 @@ class Order(models.Model):
         User, on_delete=models.SET_NULL, related_name="delivery_crew", null=True)
     status = models.BooleanField(default=0, db_index=True)
     total = models.DecimalField(max_digits=6, decimal_places=2, default=0)
-    date = models.DateField(db_index=True)
+    date = models.DateField(db_index=True,auto_now_add=True)
 
 
 class OrderItem(models.Model):
     order = models.ForeignKey(
-        Order, on_delete=models.CASCADE, related_name='order')
+        Order, on_delete=models.CASCADE, related_name='items')
     menuitem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.SmallIntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)

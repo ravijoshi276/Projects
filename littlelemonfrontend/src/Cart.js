@@ -7,12 +7,23 @@ import Section from "./Section";
 import Heading from "./Heading";
 
 const Cart= ()=>{
-    const {cart,addToCart,removFromCart,total,deleteFromCart} = useCart();
-   
+    const {cart,addToCart,removFromCart,total,deleteFromCart,orderItems} = useCart();
+    const [isSubmitted,setIsSubmitted]= useState(false);
+    const handleOrders =()=>{
+        try {
+            orderItems();
+            setIsSubmitted(true)
+        }catch(err){
+            isSubmitted(false);
+        }
+        
+    }
     return(<main className="cart-page">
     <Heading>Cart</Heading>
+    {isSubmitted?<div className={isSubmitted?`alert success submitted`:""}>Order Sucessful</div>:""}
     {cart.map((item)=>(<Card id={item.id} title= {item.title} price={item.price} quantity={item.quantity} unit_price={item.unit_price} key={item.id} addfunc={addToCart} deletefunc={deleteFromCart} removefunc={removFromCart}/>))}
     <div className='total'>Grand Total: {total}</div>
+    <div className="btn-cover"><button className="order-btn" onClick={handleOrders}>Order Now</button></div>
     </main>);
 }
 

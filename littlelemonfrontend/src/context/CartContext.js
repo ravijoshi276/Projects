@@ -1,6 +1,6 @@
 import { useState,useEffect,useContext ,createContext } from "react";
 import { useAuth } from "../context/AuthContext";
-import cartApi from "../services/api";
+import {cartApi,ordersApi} from "../services/api";
 import placeholder_image from "../assets/images/menuitem-placeholder.png"
 
 const CartContext = createContext(null);
@@ -12,6 +12,7 @@ export const  CartProvider=({children})=> {
     const [loading,setLoading] = useState(false);
     const [itemCount,setItemCount]= useState(0);
     const [total,setTotal]=useState(0);
+
     //Getting Cart Details
     useEffect(()=>{
         if(!token && !user){
@@ -57,6 +58,21 @@ export const  CartProvider=({children})=> {
  
     },[token]);
    
+    const orderItems = async ()=>{
+        setLoading(true);
+        try{
+            await ordersApi.orderItems(token);
+            setLoading(false);
+            setCart([]);
+            setItemCount(0);
+            setTotal(0);
+            }catch (err){
+
+                console.log(err);
+            }
+        
+        }
+    
     const addToCart = async (productid,price,title,image=placeholder_image)=>{
         let isExisting =false;
         let updatedCart = [];
@@ -128,10 +144,11 @@ export const  CartProvider=({children})=> {
    const clearCart = async() => {
     setCart([]);
     setItemCount(0);
+    setTotal(0);
     await cartApi.deleteCart(token);
    }
 
-   return <CartContext.Provider value={{cart,itemCount,addToCart,deleteFromCart,clearCart,removFromCart,loading,total}} >
+   return <CartContext.Provider value={{cart,itemCount,addToCart,deleteFromCart,clearCart,removFromCart,loading,total,orderItems}} >
     {children}
    </CartContext.Provider>
 }
