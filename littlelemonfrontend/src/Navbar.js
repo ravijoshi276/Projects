@@ -6,7 +6,7 @@ import LoginForm from './LoginForm';
 import SignupForm from './SingupFrom';
 import Cart from './Cart';
 import ProtectedRouteCart from './ProtectedRouteCart';
-
+import Orders from './Orders';
 export default function Navbar (){
 return (<BrowserRouter>
 <Header />
@@ -24,6 +24,7 @@ return (<BrowserRouter>
         
         {/*Protected Cart Route */}
         <Route element={<ProtectedRouteCart/>}>
+            <Route path='/orders' element={<Orders />}></Route>
             <Route path='/cart' element ={<Cart />}></Route>
         </Route>
     

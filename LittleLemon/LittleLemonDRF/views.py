@@ -90,9 +90,7 @@ class OrderView(generics.ListCreateAPIView):
             return Order.objects.all().filter(delivery_crew=self.request.user)  #only show oreders assigned to him
         else: #delivery crew or manager
             return Order.objects.all()
-        # else:
-        #     return Order.objects.all()
-
+       
     def create(self, request, *args, **kwargs):
         menuitem_count = Cart.objects.all().filter(user=self.request.user).count()
         if menuitem_count == 0:
@@ -103,25 +101,25 @@ class OrderView(generics.ListCreateAPIView):
         data['total'] = total
         data['user'] = self.request.user.id
         order_serializer = OrderSerializer(data=data)
-        if (order_serializer.is_valid()):
-            order = order_serializer.save()
+        order_serializer.is_valid(raise_exception=True)
+        order = order_serializer.save()
 
-            items = Cart.objects.all().filter(user=self.request.user).all()
+        items = Cart.objects.all().filter(user=self.request.user).all()
 
-            for item in items.values():
-                orderitem = OrderItem(
-                    order=order,
-                    menuitem_id=item['menuitem_id'],
-                    price=item['price'],
-                    quantity=item['quantity'],
-                )
-                orderitem.save()
+        for item in items.values():
+            orderitem = OrderItem(
+                order=order,
+                menuitem_id=item['menuitem_id'],
+                price=item['price'],
+                quantity=item['quantity'],
+            )
+            orderitem.save()
 
-            Cart.objects.all().filter(user=self.request.user).delete() #Delete cart items
+        Cart.objects.all().filter(user=self.request.user).delete() #Delete cart items
 
-            result = order_serializer.data.copy()
-            result['total'] = total
-            return Response(order_serializer.data)
+        result = order_serializer.data.copy()
+        result['total'] = total
+        return Response(order_serializer.data)
     
     def get_total_price(self, user):
         total = 0
@@ -138,7 +136,7 @@ class SingleOrderView(generics.RetrieveUpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         if self.request.user.groups.count()==0: # Normal user, not belonging to any group = Customer
-            return Response('Not Ok')
+            return Response('Not Ok',status=status.HTTP_403_FORBIDDEN)
         else: #everyone else - Super Admin, Manager and Delivery Crew
             return super().update(request, *args, **kwargs)
 

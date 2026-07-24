@@ -36,7 +36,7 @@ const Header =({children})=>{
         
         <div className='header-buttons'>
             <div className='theme-button-cover'><button className='theme-toggle-btn' onClick={()=>toggleTheme(theme)}><FontAwesomeIcon icon={faLightbulb} size='lg' className='cart'/></button></div>
-            {isLoggedIn?<button className='btn' onClick={handleLogout}>Log Out</button>:(<div className='login-btns'>    
+            {isLoggedIn?<div className='login-btns'><button className='btn' onClick={handleLogout}>Log Out</button> <NavLink to='/orders'>Orders</NavLink></div>:(<div className='login-btns'>    
             <NavLink to='/login'>Login</NavLink>
             <NavLink to='/sign-up'>Sign Up</NavLink>
             </div>)}
