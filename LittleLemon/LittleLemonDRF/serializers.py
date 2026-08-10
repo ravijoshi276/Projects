@@ -19,7 +19,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
     # category = CategorySerializer(read_only=True)
     class Meta:
         model = MenuItem
-        fields = ['id', 'title', 'price', 'category', 'featured']
+        fields = ['id', 'title', 'price', 'category', 'featured','image_url','description']
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -97,6 +97,7 @@ class UserCreationSerializer(UserCreatePasswordRetypeSerializer):
         fields =  fields = (
             'id',
             'username',
+            "email",
             'password',
             're_password', 
             'first_name',

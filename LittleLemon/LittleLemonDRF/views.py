@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Category, MenuItem, Cart, Order, OrderItem
 from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderSerializer, UserSerilializer
 from rest_framework.response import Response
-
+from .permissions import IsManager
 from rest_framework.permissions import IsAdminUser
 from django.shortcuts import  get_object_or_404
 
@@ -16,26 +16,15 @@ from rest_framework import status
 class CategoriesView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
-    def get_permissions(self):
-        permission_classes = []
-        if self.request.method != 'GET':
-            permission_classes = [IsAuthenticated]
-
-        return [permission() for permission in permission_classes]
+    permission_classes = [IsManager]
 
 class MenuItemsView(generics.ListCreateAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     search_fields = ['category__title']
     ordering_fields = ['price', 'inventory']
-
-    def get_permissions(self):
-        permission_classes = []
-        if self.request.method != 'GET':
-            permission_classes = [IsAuthenticated]
-
-        return [permission() for permission in permission_classes]
+    permission_classes=[IsManager]
+   
     def get_queryset(self):
         # Start with all products
         queryset = MenuItem.objects.all()
@@ -55,13 +44,8 @@ class MenuItemsView(generics.ListCreateAPIView):
 class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
-
-    def get_permissions(self):
-        permission_classes = []
-        if self.request.method != 'GET':
-            permission_classes = [IsAuthenticated]
-
-        return [permission() for permission in permission_classes]
+    permission_classes = [IsManager]
+    
 
 class CartView(generics.ListCreateAPIView):
     queryset = Cart.objects.all()
@@ -177,7 +161,7 @@ class DeliveryCrewViewSet(viewsets.ViewSet):
         user = get_object_or_404(User, username=request.data['username'])
         dc = Group.objects.get(name="Delivery Crew")
         dc.user_set.add(user)
-        return Response({"message": "user added to the delivery crew group"}, 200)
+        return Response({"message": "user added to the delivery crew group"}, status=status.HTTP_201_CREATED)
 
     def destroy(self, request):
         #only for super admin and managers
@@ -187,4 +171,4 @@ class DeliveryCrewViewSet(viewsets.ViewSet):
         user = get_object_or_404(User, username=request.data['username'])
         dc = Group.objects.get(name="Delivery Crew")
         dc.user_set.remove(user)
-        return Response({"message": "user removed from the delivery crew group"}, 200)
+        return Response({"message": "user removed from the delivery crew group"}, status=status.HTTP_204_NO_CONTENT)
