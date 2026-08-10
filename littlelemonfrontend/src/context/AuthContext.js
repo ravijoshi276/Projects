@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({children})=>{
     const [token,setToken]= useState(()=>localStorage.getItem('authToken'));
     const [user,setUser] = useState({first_name:null,last_name:null});
-    const [group,setGroup] = useState(null);
+    const [group,setGroup] = useState(()=>localStorage.getItem('group'));
     const [loading,setLoading] = useState(true);
     const isLoggedIn = !!token;
    const fetchtUser = async(authtoken) =>{
@@ -43,8 +43,9 @@ export const AuthProvider = ({children})=>{
                 detectedgroup="deliverycrew";
             }
             }
+            localStorage.setItem('group',detectedgroup);
             setGroup(detectedgroup);
-            console.log('auth',group);
+            
             setToken(data.auth_token);
             setLoading(true);
             await fetchtUser(data.auth_token);
@@ -66,7 +67,7 @@ export const AuthProvider = ({children})=>{
     },[token]);
 
     return(
-        <AuthContext.Provider value ={{token,login,isLoggedIn,logout,user,loading,group}}>
+        <AuthContext.Provider value ={{token,login,isLoggedIn,logout,user,loading,group,setUser}}>
             {children}
         </AuthContext.Provider>
     );

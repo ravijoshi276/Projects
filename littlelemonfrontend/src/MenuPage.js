@@ -1,62 +1,39 @@
-import {useState,useEffect} from 'react';
+import {useState,useTransition} from 'react';
 import Section from './Section';
 import Heading from './Heading';
 import placeholder_image from "./assets/images/menuitem-placeholder.png"
 import { useCart } from './context/CartContext';
-import { NavLink } from 'react-router';
+import { NavLink,useOutletContext } from 'react-router';
 import { useAuth } from './context/AuthContext';
 
 
-export default function MenuPage(){
+function MenuPage(){
 const {group,user,isLoggedIn}= useAuth();
-const [menuData,setmenuData]  = useState(null);
-const [categoryData,setcategoryData]  = useState(null);
-const [loading,setloading] = useState(true);
+const {menuData,categoryData} = useOutletContext();
 const {addToCart} = useCart();
+const [query,setQuery]= useState(""); 
+const [isPending,startTransition]= useTransition();
+const itemData = menuData?menuData.results.filter(item=>{
+    if(query.trim().length===0){
+        return item
+    }else if(item.title.toLowerCase().includes(query.trim().toLowerCase())){
+        return item;
+    }}
+):null;
 
-  //Fetching Menu data
-  useEffect(()=>{
-    setloading(true);
-    fetch("http://127.0.0.1:8000/api/menu-items").then((response)=>{
-          if (!response.ok){
-      throw new Error(`Failed to fetch data : ${response.status}` );
+const handleChange= (e)=>{
+    const value= e.target.value;
+    startTransition(()=> {   
+    setQuery(value);
     }
-   return response.json();
-  }
-  ).then((data)=>{
-    setmenuData(data);
-  setloading(false);}
-).catch((err)=>{
-console.error(err);
-  })
-},[])
-
-//Fetching Category Data
-  useEffect(()=>{
-    setloading(true);
-    fetch("http://127.0.0.1:8000/api/categories").then((response)=>{
-          if (!response.ok){
-      throw new Error(`Failed to fetch data : ${response.status}` );
-    }
-   return response.json();
-  }
-  ).then((data)=>{
-    setcategoryData(data);
-  setloading(false);}
-).catch((err)=>{
-console.error(err);
-  })
-},[])
-if(!menuData || loading){
-    return <Heading>Loading menu......</Heading>
+)
 }
-
-const cards = categoryData ? categoryData.results.map( category=>{
+const MenuCards = categoryData ? categoryData.results.map( category=>{
     return(
     <Section sectionclass={'menuitems'} key={category.id}>
         <div  className='menu-item-heading'><Heading>{category.title}</Heading></div> 
         <div className= "cards">
-        {menuData.results.filter(item => item.category === category.id?true:false).map(item=><Card title={item.title} price={item.price} image={item.image ||null} description={item.image ||null} addfunc={addToCart} id ={item.id} loggedin ={isLoggedIn}/>)}
+        {itemData.filter(item => item.category === category.id?true:false).map(item=><Menucard title={item.title} price={item.price} image={item.image_url} description={item.description} addfunc={addToCart} id ={item.id} loggedin ={isLoggedIn} featured={item.featured?true:false}/>)}
         </div>
     </Section>
     )
@@ -65,34 +42,46 @@ const cards = categoryData ? categoryData.results.map( category=>{
 ): "<div>No data</div>";
 return (
     <main>
-    <Heading>Menu Items</Heading>
-    {loading||(cards.length <0)?"Loading...":cards}   
+    <div className='heading-with-search'>
+        <Heading>Menu Items</Heading>
+        <div className='search-bar-cover'><span>Search </span><input className='search-bar' type='text' onChange={handleChange} value={query} placeholder='Search menu items'/></div>
+    </div>
+    {isPending?<div>Loading......</div>:""}
+    {itemData.length===0?<div className='empty-result'>No Matching Values</div>:(MenuCards.length <0)?"Loading...":MenuCards}   
     </main>
 )
 }
 
-let Card =({id,title,image,description,price,addfunc,loggedin})=>{
+const Menucard =({id,title,image,description,price,addfunc,loggedin,featured})=>{
   const [isAdded,setIsAdded] = useState(false);  
   const handleClick = () =>{
     setIsAdded(!isAdded);
     addfunc(id,price,title,image);
   }
   return(
-        <article className='card item-card'>
+        <article className='card '>
+            <div className='featured'>{featured? <svg class="featured-badge-icon" viewBox="0 0 24 24" >
+  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+</svg>:""}</div>
+            <div className='item'>
             <div className='image-cover'>
-                <img src={image?image:placeholder_image} alt={image?title:'placeholder'}/>
+                <img src={image?image:placeholder_image} alt={image?title:'placeholder'} loading='lazy'/>
             </div>
             <div className='item-details'>
+               
                 <h3>{title}</h3>
-                <p className='description'>{description}</p>
+                <p className='description'>{description?(description.slice(0,20)+ "......."):"......."}</p>
+                <div><NavLink to={"../menu-items/"+id}>View details</NavLink></div>
                 <p className='item-price'><span className='price bold'>Price</span><span>${price}</span></p>
-                <div className='btn-group'>
+                
+            </div>
+            </div>
+            <div className='btn-group'>
                 {!loggedin?<span className='lemon msg'>Login to add to cart</span>:isAdded?<NavLink className='btn gotocart'to='/cart'>Go to Cart</NavLink>:""}
                 <button className="btn addtocart"onClick={handleClick} disabled = {isAdded||!loggedin}>{isAdded?"Added to Cart":"Add to Cart"}</button>
                 </div>
-            </div>
-
         </article>
     )
 }
 
+export {Menucard,MenuPage};

@@ -40,10 +40,8 @@ const LoginForm =()=>{
             setTimeout(()=>{
             if(data.groups.length===0){
                 navigate('/menu-items');
-            }else if(data.groups.includes("Delivery Crew")){
-                navigate('/')
             }else{
-                navigate('/about-me');
+                navigate('/dashboard');
             }
             setError(false);
         },3000);
