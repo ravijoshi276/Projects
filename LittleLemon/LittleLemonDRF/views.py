@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .models import Category, MenuItem, Cart, Order, OrderItem
-from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderSerializer, UserSerilializer
+from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
+from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderSerializer, UserSerilializer,TableSeralizer,ReservationSerializer
 from rest_framework.response import Response
 from .permissions import IsManager
 from rest_framework.permissions import IsAdminUser
@@ -172,3 +172,37 @@ class DeliveryCrewViewSet(viewsets.ViewSet):
         dc = Group.objects.get(name="Delivery Crew")
         dc.user_set.remove(user)
         return Response({"message": "user removed from the delivery crew group"}, status=status.HTTP_204_NO_CONTENT)
+
+class TablesView(generics.ListCreateAPIView):
+    queryset=Table.objects.all()
+    serializer_class = TableSeralizer
+    permission_classes =[IsManager]
+
+class SingleTableView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Table.objects.all()
+    serializer_class = TableSeralizer
+    permission_classes=[IsAuthenticated,IsManager]
+
+class ReservationsView(generics.ListCreateAPIView):
+    serializer_class = ReservationSerializer
+    authentication_classes =[IsAuthenticated]
+
+    def get_queryset(self):
+        if self.request.user.groups.count()==0:#For a normal user
+            return Reservation.objects.all().filter(user= self.request.user)
+        else: #For Manager and other Staff members
+            return Reservation.objects.all()
+
+
+class SingleReservationView(generics.UpdateAPIView):
+    serializer_class=ReservationSerializer
+    authentication_classes=[IsAuthenticated]
+    def get_queryset(self):
+        if self.request.user.groups.count()==0:#For a normal user
+            return Reservation.objects.all().filter(user= self.request.user)
+        else: #For Manager and other Staff members
+            return Reservation.objects.all()
+
+
+    
+        
