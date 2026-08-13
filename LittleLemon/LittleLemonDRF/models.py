@@ -50,3 +50,48 @@ class OrderItem(models.Model):
 
     class Meta:
         unique_together = ('order', 'menuitem')
+
+class Table(models.Model):
+  table_number = models.IntegerField(unique=True)
+  capacity = models.IntegerField()
+  is_active = models.BooleanField(default=True)
+
+  def __str__(self):
+    return f"Table #{self.table_number} (Capacity: {self.capacity})"
+
+
+class Reservation(models.Model):
+
+  class StatusChoices(models.TextChoices):
+    PENDING = "Pending", "Pending"
+    CONFIRMED = "Confirmed", "Confirmed"
+    CANCELLED = "Cancelled", "Cancelled"
+
+  # Corrected: SET_NULL requires null=True and blank=True
+  user = models.ForeignKey(
+      User, on_delete=models.SET_NULL, null=True, blank=True
+  )
+  table = models.ForeignKey(
+      Table, on_delete=models.SET_NULL, null=True, blank=True
+  )
+
+  customer_name = models.CharField(max_length=100)
+  email = models.EmailField()
+  phone = models.CharField(max_length=20)
+  number_of_guests = models.IntegerField()
+  date = models.DateField()
+  time_slot = models.CharField(
+      max_length=50
+  )  # e.g., "7:00 PM - 9:00 PM" or use TimeField
+  status = models.CharField(
+      max_length=20,
+      choices=StatusChoices.choices,
+      default=StatusChoices.PENDING,
+  )
+  created_at = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return (
+        f"Reservation by {self.customer_name} for {self.number_of_guests} guests"
+        f" on {self.date}"
+    )

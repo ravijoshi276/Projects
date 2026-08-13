@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from decimal import Decimal
+from datetime import date,timedelta
 from djoser.serializers import UserCreatePasswordRetypeSerializer,TokenSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
-from .models import Category, MenuItem, Cart, Order, OrderItem
+from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
 
 
 class CategorySerializer (serializers.ModelSerializer):
@@ -129,3 +129,45 @@ class CustomTokenSerializer(TokenSerializer):
     groups = serializers.SlugRelatedField(read_only =True,slug_field='name',source ='user.groups',many=True)
     class Meta(TokenSerializer.Meta):
         fields = ('auth_token','groups')
+
+
+
+class TableSeralizer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Table
+        fields=["id","table_number","capacity","is_active"]
+        read_only_fields=["id"]
+
+
+class ReservationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = [
+            'id', 
+            'user', 
+            'table', 
+            'customer_name', 
+            'email', 
+            'phone', 
+            'number_of_guests', 
+            'date', 
+            'time_slot', 
+            'status', 
+            'created_at'
+        ]
+        # Make 'created_at' read-only so clients can't pass/manipulate it manually
+        read_only_fields = ['created_at']
+
+    def validate_date(self, value):
+        """
+        Validates that the reservation date is at least 1 day in advance.
+        """
+        min_allowed_date = date.today() + timedelta(days=1)
+        
+        if value < min_allowed_date:
+            raise serializers.ValidationError(
+                "Reservations must be made at least one day in advance."
+            )
+        
+        return value
