@@ -19,6 +19,12 @@ import EditManager from './EditManager';
 import EditOrders from './EditOrders';
 import EditDeliveryCrew from './EditDeliveryPerson';
 import Footer from './Footer';
+import ReservationForm from './ReservationForm';
+import Reservations from './Reservations';
+import ReservationOutletContext from './ReservationOutletContest';
+import SingleReservatioPage  from './SingleReservationPage';
+
+
 export default function Navbar (){
 return (<BrowserRouter>
 <Header />
@@ -38,12 +44,17 @@ return (<BrowserRouter>
             <Route  path='/menu-items' element ={<MenuPage/>}></Route>
             <Route path='/menu-items/:id' element ={<SingleItemPage />}></Route>
         </Route>
-        <Route path='/book-table' element ={<h1>Book Table</h1>}></Route>
+        <Route path='/book-table' element ={<ReservationForm />}></Route>
         <Route path='/about-me' element ={<h1>About Page</h1>}></Route>
         
         {/*Protected Cart Route */}
         <Route element={<ProtectedRouteCart/>}>
+        <Route element={<ReservationOutletContext />}>
+            <Route path='user/reservations' element={<Reservations />}></Route>
+            <Route path='user/reservations/:id' element={<SingleReservatioPage />}></Route>
+        </Route>
             <Route path='/user/profile' element={<Profile />}></Route>
+        
             <Route path='/orders' element={<Orders />}></Route>
             <Route path='/cart' element ={<Cart />}></Route>
         </Route>

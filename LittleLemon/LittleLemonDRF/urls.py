@@ -12,5 +12,9 @@ urlpatterns = [
         {'get': 'list', 'post': 'create', 'delete': 'destroy'})),
 
     path('groups/delivery-crew/users', views.DeliveryCrewViewSet.as_view(
-        {'get': 'list', 'post': 'create', 'delete': 'destroy'}))
+        {'get': 'list', 'post': 'create', 'delete': 'destroy'})),
+    path("reservations",views.ReservationsView.as_view(),name='reservations'),
+    path("tables",views.TablesView().as_view(),name='tables'),
+    path("tables/<int:pk>/",views.TableDetailsDestroy().as_view(),name='table-details-destroy'),
+    path("reservations/<int:pk>/",views.ReservationUpdateView().as_view(),name='reservation-details'),
 ]
