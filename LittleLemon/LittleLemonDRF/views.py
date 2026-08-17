@@ -178,14 +178,14 @@ class TablesView(generics.ListCreateAPIView):
     serializer_class = TableSeralizer
     permission_classes =[IsManager]
 
-class SingleTableView(generics.RetrieveUpdateDestroyAPIView):
+class TableDetailsDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset= Table.objects.all()
     serializer_class = TableSeralizer
     permission_classes=[IsAuthenticated,IsManager]
 
 class ReservationsView(generics.ListCreateAPIView):
     serializer_class = ReservationSerializer
-    authentication_classes =[IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         if self.request.user.groups.count()==0:#For a normal user
@@ -194,9 +194,9 @@ class ReservationsView(generics.ListCreateAPIView):
             return Reservation.objects.all()
 
 
-class SingleReservationView(generics.UpdateAPIView):
+class ReservationUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class=ReservationSerializer
-    authentication_classes=[IsAuthenticated]
+    permission_classes= [ IsAuthenticated ]
     def get_queryset(self):
         if self.request.user.groups.count()==0:#For a normal user
             return Reservation.objects.all().filter(user= self.request.user)

@@ -141,6 +141,10 @@ class TableSeralizer(serializers.ModelSerializer):
 
 
 class ReservationSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+            queryset=User.objects.all(),
+            default=serializers.CurrentUserDefault()
+        )
     class Meta:
         model = Reservation
         fields = [
@@ -157,7 +161,7 @@ class ReservationSerializer(serializers.ModelSerializer):
             'created_at'
         ]
         # Make 'created_at' read-only so clients can't pass/manipulate it manually
-        read_only_fields = ['created_at']
+        read_only_fields = ['created_at','user']
 
     def validate_date(self, value):
         """

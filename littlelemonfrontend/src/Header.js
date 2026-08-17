@@ -52,6 +52,8 @@ const Header =({children})=>{
                 {group !== 'user'?<li><NavLink className='btns' to='/dashboard'>Dashboard</NavLink></li>:""}
                 <li><NavLink className='btns' to='/user/profile'>Profile</NavLink></li>
                 <li><NavLink className='btns' to='/orders'>Orders</NavLink></li>
+                <li><NavLink className='btns' to='user/reservations'>Reservations</NavLink></li>
+                
                 <li><button className='btns' onClick={handleLogout}>Log Out</button></li>
                 </ul>
                 </div>):(<div className='login-btns'>    
