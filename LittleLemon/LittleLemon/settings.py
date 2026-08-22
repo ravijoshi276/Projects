@@ -15,6 +15,10 @@ import os
 from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '../', 'littlelemonfrontend', 'src', 'assets')
+
 load_dotenv()
 
 # Quick-start development settings - unsuitable for production
@@ -155,7 +159,12 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '10/minute',      # Anonymous users (e.g., login attempts)
         'user': '50/minute',    # Authenticated users
-    }
+    },
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ]
 }
 DJOSER = {
     'USER_ID_FIELD':'username',

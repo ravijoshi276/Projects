@@ -16,10 +16,12 @@ class MenuItemSerializer(serializers.ModelSerializer):
     category = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all()
     )
+    image_url = serializers.URLField(required=True)
+    compressed_image = serializers.ImageField(required=False)
     # category = CategorySerializer(read_only=True)
     class Meta:
         model = MenuItem
-        fields = ['id', 'title', 'price', 'category', 'featured','image_url','description']
+        fields = ['id', 'title', 'price', 'category', 'featured','image_url','description','compressed_image']
 
 
 class CartSerializer(serializers.ModelSerializer):

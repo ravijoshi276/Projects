@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .permissions import IsManager
 from rest_framework.permissions import IsAdminUser
 from django.shortcuts import  get_object_or_404
-
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.models import Group, User
 
 from rest_framework import viewsets
@@ -23,6 +23,7 @@ class MenuItemsView(generics.ListCreateAPIView):
     serializer_class = MenuItemSerializer
     search_fields = ['category__title']
     ordering_fields = ['price', 'inventory']
+    parser_classes = (MultiPartParser, FormParser) 
     permission_classes=[IsManager]
    
     def get_queryset(self):
