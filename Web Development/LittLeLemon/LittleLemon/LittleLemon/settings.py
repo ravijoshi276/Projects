@@ -170,6 +170,7 @@ DJOSER = {
 # Read allowed domains from environment array if in production, use fallback locally
 if DEBUG:
     CORS_ALLOWED_ORIGINS = [
+        "https://littlelemon-gules.vercel.app",
         "http://localhost:3000",
     ]
 else:

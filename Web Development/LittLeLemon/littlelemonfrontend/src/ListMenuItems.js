@@ -24,7 +24,7 @@ const deleteItem= async (id)=>{
     console.log("clicked");
     setError(false);
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/menu-items/${id}`,{
+        const response = await fetch(`https://little-lemon-backend-afqk.onrender.com/api/menu-items/${id}`,{
             method:'DELETE',
             headers:{
                     'Content-Type': 'application/JSON',
