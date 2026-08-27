@@ -30,7 +30,7 @@ const LoginForm =()=>{
                 body : JSON.stringify(credentials),
             });
             if(!response.ok){
-                
+                    console.log( "err status",response.status)
                 throw new Error(`Server responded with  status : ${response.status}`);
             }
             setIsSubmitted(true);
