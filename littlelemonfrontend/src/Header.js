@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router';
 import { useAuth } from "./context/AuthContext";
 import { useCart } from './context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCartShopping,faLightbulb,faCaretDown}  from '@fortawesome/free-solid-svg-icons'
+import {faCartShopping,faLightbulb,faCaretDown,faSun,faMoon}  from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from './context/ThemeContext';
 import { useState } from 'react';
 
@@ -42,24 +42,33 @@ const Header =({children})=>{
     const handleClick = ()=>{
         setIsHidden(prev=>!prev);
     }
-    return <header className="Header">
-        <div className='logocover'><img src={logo} alt='LittleLemon Logos'></img></div>
+    return <header className="flex  justify-center items-center mx-2 p-0.5 flex-wrap sm:p-1 md:flex-nowrap justify-between" >
+        <div className=' w-1/4 p-1 grow sm:w-1/5 md:grow-0'><img src={logo} alt='LittleLemon Logos' className='h-full w-full object-contain'></img></div>
         {loggingOut?<div className='alert logout'>Logging out....</div>:""}
-        <div className='header-buttons'>
-            <div className='theme-button-cover'><button className='theme-toggle-btn' onClick={()=>toggleTheme(theme)}><FontAwesomeIcon icon={faLightbulb} size='lg' className='cart'/></button></div>
+        <div className='flex h-full  mt-5 items-center justify-evenly  gap-5 grow sm:justify-end md:mt-0'>
             
-            {isLoggedIn?(<div className={isHidden?'profile-btn-holder':'profile-btn-holder clicked'}><div className={isHidden?'account':'account clicked'} onClick={handleClick} >Account<FontAwesomeIcon icon={faCaretDown} size='lg' className='cart'/></div><ul className={isHidden?'hidden':"profile-btns"} onClick={handleClick}>
-                {group !== 'user'?<li><NavLink className='btns' to='/dashboard'>Dashboard</NavLink></li>:""}
-                <li><NavLink className='btns' to='/user/profile'>Profile</NavLink></li>
-                <li><NavLink className='btns' to='/orders'>Orders</NavLink></li>
-                <li><NavLink className='btns' to='user/reservations'>Reservations</NavLink></li>
+             <button 
+      type="button"
+      className={`theme-toggle-btn ${theme!=="dark" ? 'active' : ''}`}
+      aria-label="Toggle dark mode"
+      aria-pressed={theme!=='dark'}
+      onClick={()=>toggleTheme(theme)}
+    >
+      <span className="toggle-thumb" >{theme!=="dark"?<FontAwesomeIcon icon={faSun} size='sm' className='sun'/>:<FontAwesomeIcon icon={faMoon} size='sm' className='text-[var(--color-primary)]'/>}</span>
+    </button>
+  
+            {isLoggedIn?(<div className={' text-center relative  '+(isHidden?"":'clicked')}><div className={"rounded-none bg-[var(--color--primary)] p-1.5 sm:p-2.5 account "+ (isHidden?'':' clicked')} onClick={handleClick} >Account<FontAwesomeIcon icon={faCaretDown} size='lg' className='cart'/></div><ul className={ "z-[1001] absolute "+ (isHidden?'hidden ':"profile-btns ")} onClick={handleClick}>
+                {group !== 'user'?<li><NavLink className='nav-dashboard-btn' to='/dashboard'>Dashboard</NavLink></li>:""}
+                <li><NavLink className='nav-dashboard-btn' to='/user/profile'>Profile</NavLink></li>
+                <li><NavLink className='nav-dashboard-btn' to='/orders'>Orders</NavLink></li>
+                <li><NavLink className='nav-dashboard-btn' to='user/reservations'>Reservations</NavLink></li>
                 
-                <li><button className='btns' onClick={handleLogout}>Log Out</button></li>
+                <li><button className='nav-dashboard-btn' onClick={handleLogout}>Log Out</button></li>
                 </ul>
-                </div>):(<div className='login-btns'>    
+                </div>):(<div className='flex align-center  gap-5 grow min-w-[190px] max-w-[50%] sm:max-w-[45%]  text-center'>    
             
-            <NavLink to='/login'>Login</NavLink>
-            <NavLink to='/sign-up'>Sign Up</NavLink>
+            <NavLink className= " grow px-3  rounded-lg border transition-all duration-200 btn-outline  " to='/login'>Login</NavLink>
+            <NavLink className =" grow px-3  rounded-lg border border-transparent transition-all duration-200 btn-primary" to='/sign-up'>Sign Up</NavLink>
             </div>)}
             <div className='cart-cover'>
             <NavLink to={isLoggedIn?'/cart':'/login'} className='cart'><div className='cart-count'>{isLoggedIn?itemCount:""}</div><FontAwesomeIcon icon={faCartShopping} size='lg' className='cart'/></NavLink>

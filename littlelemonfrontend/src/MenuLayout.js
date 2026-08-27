@@ -10,6 +10,7 @@ export default function MenuLayout() {
   const refreshMenu = ()=>{
     setMenuTrigger(prev=>prev+1)
   }
+
   const refreshCategory =()=>{
     setCategoryTrigger(prev=>prev+1)
   }

@@ -47,7 +47,7 @@ const deleteItem= async (id)=>{
 
 }
 
-let MenuCards = itemData.length ? itemData.map(item=><Menucard title={item.title} price={item.price} image={item.image ||null} description={item.image ||null} deleteFunc={deleteItem} id ={item.id} featured={item.featured?true:false}/>) : <div className='empty-result'>No Matching Values</div>;
+let MenuCards = itemData.length ? itemData.map(item=><Menucard key ={item.id} id={item.id} image = {item.image_url} title={item.title} price={item.price}  description={item.description ||null} deleteFunc={deleteItem} id ={item.id} featured={item.featured?true:false}/>) : <div className='empty-result'>No Matching Values</div>;
 
 const handleChange= (e)=>{
 const value =e.target.value;
@@ -59,14 +59,16 @@ setQuery(value);
 
 
 return (
-    <main>
+    <main className='menu-dashboard'>
     <div className='heading-with-search'>
         <Heading>Menu Items</Heading>
         <div className='search-bar-cover'><span>Search </span><input className='search-bar' type='text' placeholder="Search Item" onChange={handleChange} value={query}/></div>
         <div className={isDeleted?'alert success':"hidden"}>{error?"Some Error occured":"Item Deleted succesfully"}</div>
     </div>
     {isPending?<div>Loading........</div>:""}
-    {(MenuCards.length <0)?"Loading...":MenuCards}   
+   <div className='menu-dashboard-cards'>
+        {(MenuCards.length <0)?"Loading...":MenuCards}
+    </div>
     </main>);
 }
 
@@ -76,9 +78,9 @@ const Menucard =({id,title,image,description,price,deleteFunc,featured})=>{
     deleteFunc(id);
   }
   return(
-        <article className='card item-card'>
-            <div className='image-cover'>
-                <img src={image?image:placeholder_image} alt={image?title:'placeholder'}/>
+        <article className='card item-card manager'>
+            <div className='image-wrapper'>
+                <img src={image ?image:placeholder_image} alt={image?title:'placeholder' } loading='lazy'/>
             </div>
             <div className='item-details'>
                 {featured? <svg class="featured-badge-icon" viewBox="0 0 24 24" >

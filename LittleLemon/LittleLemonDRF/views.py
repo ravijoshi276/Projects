@@ -46,6 +46,7 @@ class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     permission_classes = [IsManager]
+    parser_classes = (MultiPartParser, FormParser)
     
 
 class CartView(generics.ListCreateAPIView):
