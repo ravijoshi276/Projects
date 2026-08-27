@@ -183,7 +183,7 @@ else:
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# ✅ FIX: Modern Django 4.2/5.x/6.x storage routing system format for WhiteNoise
+#  routing system format for WhiteNoise
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
