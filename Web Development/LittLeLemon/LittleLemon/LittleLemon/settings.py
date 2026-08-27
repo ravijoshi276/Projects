@@ -21,17 +21,16 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-%%z9wgkaqs#(_)ze)1*ee=m3e_4a1a6a2dp*fhh8%zlnsz%o2p')
 
-# Seamless Host Management
+#  Host Management
 ALLOWED_HOSTS = []
+
 if DEBUG:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'little-lemon-backend-afqk.onrender.com']
 else:
-    # Render provides this automatically during runtime
     render_host = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
     if render_host:
         ALLOWED_HOSTS.append(render_host)
         ALLOWED_HOSTS.append(f"www.{render_host}")
-
 # --- APPLICATION DEFINITION ---
 
 INSTALLED_APPS = [
@@ -54,15 +53,8 @@ if DEBUG:
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-]
-
-# Dynamically inject Debug Toolbar Middleware only when debugging
-if DEBUG:
-    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
-
-MIDDLEWARE += [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Integrated for efficient production static serving
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,6 +62,10 @@ MIDDLEWARE += [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Append Debug Toolbar middleware dynamically if debugging
+if DEBUG:
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -170,7 +166,6 @@ DJOSER = {
 # Read allowed domains from environment array if in production, use fallback locally
 if DEBUG:
     CORS_ALLOWED_ORIGINS = [
-        "https://littlelemon-gules.vercel.app",
         "http://localhost:3000",
     ]
 else:
