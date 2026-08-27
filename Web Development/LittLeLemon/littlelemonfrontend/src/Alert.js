@@ -9,4 +9,4 @@ export default function Alert ({type,heading,message}){
 </div>) 
     return Card
 
-}
+};
