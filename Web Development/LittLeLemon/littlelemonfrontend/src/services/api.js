@@ -7,7 +7,7 @@ const makeHeaders = (token) =>({
 //Cart api
 const cartApi ={
     getCart : async (token)=>{
-        const response = await fetch("https://little-lemon-backend-afqk.onrender.com//api/cart/menu-items",{
+        const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/cart/menu-items",{
             method: 'GET',
             headers : makeHeaders(token)
         } );
@@ -28,7 +28,7 @@ const cartApi ={
         
     },
     updateCart : async(token,cartitem) =>{
-        const response = await fetch("https://little-lemon-backend-afqk.onrender.com//api/cart/menu-items",{
+        const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/cart/menu-items",{
             method: 'POST',
             headers : makeHeaders(token),
             body: [JSON.stringify(cartitem)]
@@ -41,7 +41,7 @@ const cartApi ={
 
     },
     deleteCart : async (token) =>{
-        const response = await fetch("https://little-lemon-backend-afqk.onrender.com//api/cart/menu-items",{
+        const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/cart/menu-items",{
             method: 'POST',
             headers : makeHeaders(token),
          

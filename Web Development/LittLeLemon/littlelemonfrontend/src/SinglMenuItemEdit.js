@@ -48,7 +48,7 @@ export default function SingleMenuItemEdit(){
                 data.append('compressed_image', compressedFile); 
             }
 
-            const response = await fetch("http://127.0.0.1:8000/api/menu-items/"+id,{
+            const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/menu-items/"+id,{
                 method:'PATCH',
                 headers:{
                     

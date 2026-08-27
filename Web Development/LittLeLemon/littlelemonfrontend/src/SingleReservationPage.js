@@ -79,7 +79,7 @@ export default function SingleReservationPage() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/tables")
+    axios.get("https://little-lemon-backend-afqk.onrender.com/api/tables")
       .then(response => setTables(response.data.results || response.data))
       .catch(err => console.error("Error fetching tables:", err));
   }, []);
@@ -125,7 +125,7 @@ export default function SingleReservationPage() {
     };
 
     try {
-      await axios.patch(`http://localhost:8000/api/reservations/${id}/`, payload, config);
+      await axios.patch(`https://little-lemon-backend-afqk.onrender.com/api/reservations/${id}/`, payload, config);
       setSubmitted(true);
       // NOTE: Removed setStartTime("") and setEndTime("") so choices don't disappear on submit click!
     } catch (err) {

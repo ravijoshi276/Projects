@@ -16,7 +16,7 @@ const Header =({children})=>{
     const [loggingOut, setLoggingOut] = useState(false);
     const handleLogout = async()=>{
         try{
-            const response = await fetch('http://localhost:8000/auth/token/logout',{
+            const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/token/logout',{
                 method:'POST',
                 headers :{
                     'Content-Type': 'application/JSON',
