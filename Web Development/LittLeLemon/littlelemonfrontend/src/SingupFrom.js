@@ -29,7 +29,7 @@ function SignupForm(){
         e.preventDefault();
         setError(false);
         try{
-            const response = await fetch('http://localhost:8000/auth/users/',{
+            const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/users/',{
                 method:"POST",
                 headers :{
                     'Content-Type': 'application/JSON',
