@@ -1,5 +1,6 @@
 import Navbar from './Navbar';
-import './App.css'
+
+
 import useOnlineStatus from './useOnlineStatus';
 import OfflineBlocker from './OfflineBlocker';
 function App() {

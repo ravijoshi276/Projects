@@ -8,7 +8,7 @@ export default function Homepage () {
     return(
         <main>
              {isLoggedIn?<div className="welcome-message">Welcome {group} <span className="lemon">{loading?"Loading....":user.first_name} !!!</span></div>:""}
-            <Heading>Welcome to <span className="lemon">Little Lemon!</span> Experience the true taste of authentic local flavors</Heading>
+            <Heading>Welcome to <span className="text-[length:0.9em] text-[var(--color-secondary)]">Little Lemon!</span>  Experience the true taste of authentic local flavors</Heading>
             {/*hero Section */}
            
             <Section sectionclass='hero'>
