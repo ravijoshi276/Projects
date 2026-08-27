@@ -20,7 +20,7 @@ export default function EditOrders(){
         const fetchAndStichData = async()=>{
             setLoading(true);
             setError(false)
-            try{const response = await fetch("http://localhost:8000//api/groups/delivery-crew/users",{
+            try{const response = await fetch("https://little-lemon-backend-afqk.onrender.com//api/groups/delivery-crew/users",{
                 method:"GET",
                 headers:{
                     'Content-Type': 'application/JSON',

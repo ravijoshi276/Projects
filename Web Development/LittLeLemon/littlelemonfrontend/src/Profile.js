@@ -20,7 +20,7 @@ export default function Profile  (){
     }
     const handleSubmit = async(e)=>{
         e.preventDefault();
-        const response = await fetch('http://127.0.0.1:8000/auth/users/me/',{
+        const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/users/me/',{
             method: "PATCH",
             headers:{
                 'Content-Type' : 'application/json',

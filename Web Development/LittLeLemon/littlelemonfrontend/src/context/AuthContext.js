@@ -10,7 +10,7 @@ export const AuthProvider = ({children})=>{
     const isLoggedIn = !!token;
    const fetchtUser = async(authtoken) =>{
         try{
-            const response = await fetch("http://127.0.0.1:8000/auth/users/me",{
+            const response = await fetch("https://little-lemon-backend-afqk.onrender.com/auth/users/me",{
                 method : 'GET',
                 headers :{
                     'Authorization': `Token ${authtoken}`,

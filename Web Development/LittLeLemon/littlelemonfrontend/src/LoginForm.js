@@ -22,7 +22,7 @@ const LoginForm =()=>{
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try{
-            const response = await fetch('http://localhost:8000/auth/token/login',{
+            const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/token/login',{
                 method:'POST',
                 headers :{
                     'Content-Type': 'application/JSON',

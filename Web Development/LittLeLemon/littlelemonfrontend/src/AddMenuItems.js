@@ -88,7 +88,7 @@ export default function AddMenuItems(){
                 data.append('compressed_image', compressedFile); 
             }
 
-            const response = await fetch("http://127.0.0.1:8000/api/menu-items", {
+            const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/menu-items", {
                 method: "POST",
                 headers: {
                     // Do NOT manually define Content-Type here; the browser needs to auto-inject the boundary token

@@ -30,7 +30,7 @@ export default function MenuLayout() {
 
 useEffect(()=>{
     setLoading(true);
-    fetch("http://127.0.0.1:8000/api/categories").then((response)=>{
+    fetch("https://little-lemon-backend-afqk.onrender.com/api/categories").then((response)=>{
           if (!response.ok){
       throw new Error(`Failed to fetch data : ${response.status}` );
     }
@@ -47,7 +47,7 @@ console.error(err);
    //Fetching Menu data
   useEffect(()=>{
     setLoading(true);
-    fetch("http://127.0.0.1:8000/api/menu-items").then((response)=>{
+    fetch("https://little-lemon-backend-afqk.onrender.com/api/menu-items").then((response)=>{
           if (!response.ok){
       throw new Error(`Failed to fetch data : ${response.status}` );
     }
