@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate,NavLink } from "react-router";
-
+import Alert from "./Alert";
 function SignupForm(){
     const [formdata,setFromdata]=useState({
         first_name:'',
@@ -47,11 +47,13 @@ function SignupForm(){
         re_password:''
     })
         //Navigate to login page after 3 seconds
-        setTimeout(()=>{navigate('/login');},3000);
+        setTimeout(()=>{navigate('/login');
+            setIsSubmitted(false)
+        },3000);
             
             }else{
                 
-                console.log(data);
+
                 setErrormessage(data);
                 throw new Error(`Some Error occured ${response}`);
             }
@@ -68,7 +70,7 @@ function SignupForm(){
     return(
         <main>
             <h1>Sign Up</h1>
-            {(isSubmitted && !error) ?<div className={isSubmitted?"success alert submitted ":"success alert"}>Account Created In succesfully</div>:""}
+            {(isSubmitted && !error) ?<Alert type='success' heading= "Success✅" message='Logged in successfully' />:isSubmitted?<Alert type='failure' heading= "Error!1" message={errorMessage} />:""}
             <form onSubmit={handleSubmit} className="signup-form form">
                 <div>
                     <label className="required" for='username'>Username</label>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "./context/AuthContext";
 import Heading from "./Heading";
+import Alert from "./Alert";
+
 const LoginForm =()=>{
     const [credentials,setCredentials]= useState({
         username:'',password:''
@@ -22,6 +24,7 @@ const LoginForm =()=>{
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try{
+            setError(false);
             const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/token/login',{
                 method:'POST',
                 headers :{
@@ -43,7 +46,8 @@ const LoginForm =()=>{
             }else{
                 navigate('/dashboard');
             }
-            setError(false);
+          
+            setIsSubmitted(false);
         },3000);
         }catch(err){
             setError(true);
@@ -54,7 +58,7 @@ const LoginForm =()=>{
      
     return(<main>
             <Heading>Login !!!</Heading>
-            {(isSubmitted && !error) ?<div className={isSubmitted?"success alert submitted ":"success alert"}>Logged In succesfully</div>:""}
+            {(isSubmitted && !error) ?<Alert type='success' heading= "Success✅" message='Logged in successfully' />:isSubmitted?<Alert type='failure' heading= "Error!1" message='Some Error Occured' />:""}
             <form className="login-form form" onSubmit={handleSubmit}>
                 <div>
                     <label for='username'>Username: </label>
