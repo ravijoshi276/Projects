@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +25,12 @@ urlpatterns = [
    
 
     path('api/',include('LittleLemonDRF.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
+
 ]
+
+if settings.DEBUG:
+    # This prevents Render from evaluating debug modules when running in production
+    urlpatterns += [
+        path('__debug__/', include('debug_toolbar.urls')),
+    ]
 
