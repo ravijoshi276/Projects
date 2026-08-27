@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCartShopping,faLightbulb,faCaretDown,faSun,faMoon}  from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from './context/ThemeContext';
 import { useState } from 'react';
-import Alert from '/Alert';
+import Alert from './Alert';
 
 const Header =({children})=>{
     const navigate =useNavigate();
