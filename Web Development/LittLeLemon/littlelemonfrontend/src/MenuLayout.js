@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 import { Outlet } from "react-router";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function MenuLayout() {
   const [menuData, setmenuData  ] = useState(null);
@@ -30,7 +31,7 @@ export default function MenuLayout() {
 
 useEffect(()=>{
     setLoading(true);
-    fetch("https://little-lemon-backend-afqk.onrender.com/api/categories").then((response)=>{
+    fetch(`${BASE_URL}/api/categories`).then((response)=>{
           if (!response.ok){
       throw new Error(`Failed to fetch data : ${response.status}` );
     }
@@ -47,7 +48,7 @@ console.error(err);
    //Fetching Menu data
   useEffect(()=>{
     setLoading(true);
-    fetch("https://little-lemon-backend-afqk.onrender.com/api/menu-items").then((response)=>{
+    fetch(`${BASE_URL}/api/menu-items`).then((response)=>{
           if (!response.ok){
       throw new Error(`Failed to fetch data : ${response.status}` );
     }

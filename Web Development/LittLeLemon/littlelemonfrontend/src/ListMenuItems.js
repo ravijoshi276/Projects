@@ -4,6 +4,7 @@ import Heading from './Heading';
 import placeholder_image from "./assets/images/menuitem-placeholder.png"
 import { NavLink,useOutletContext } from 'react-router';
 import { useAuth } from './context/AuthContext';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 
 export default function ListMenuItems(){
@@ -24,10 +25,10 @@ const deleteItem= async (id)=>{
     console.log("clicked");
     setError(false);
     try {
-        const response = await fetch(`https://little-lemon-backend-afqk.onrender.com/api/menu-items/${id}`,{
+        const response = await fetch(`${BASE_URL}/api/menu-items/${id}`,{
             method:'DELETE',
             headers:{
-                    'Content-Type': 'application/JSON',
+                    'Content-Type': 'application/json',
                     'Authorization': `Token ${token}`,
                 }
         })

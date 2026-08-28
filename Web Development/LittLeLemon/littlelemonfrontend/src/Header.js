@@ -7,6 +7,8 @@ import {faCartShopping,faLightbulb,faCaretDown,faSun,faMoon}  from '@fortawesome
 import { useTheme } from './context/ThemeContext';
 import { useState } from 'react';
 import Alert from './Alert';
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 
 const Header =({children})=>{
     const navigate =useNavigate();
@@ -17,7 +19,7 @@ const Header =({children})=>{
     const [loggingOut, setLoggingOut] = useState(false);
     const handleLogout = async()=>{
         try{
-            const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/token/logout',{
+            const response = await fetch(`${BASE_URL}/auth/token/logout`,{
                 method:'POST',
                 headers :{
                     'Content-Type': 'application/JSON',
@@ -44,7 +46,7 @@ const Header =({children})=>{
         setIsHidden(prev=>!prev);
     }
     return <header className="flex  justify-center items-center mx-2 p-0.5 flex-wrap sm:p-1 md:flex-nowrap justify-between" >
-        <div className=' w-1/4 p-1 grow sm:w-1/5 md:grow-0'><img src={logo} alt='LittleLemon Logos' className='h-full w-full object-contain'></img></div>
+        <div className=' w-1/4 p-1 grow sm:w-1/5 md:grow-0'><img src={logo} alt='LittleLemon Logo' className='h-full w-full object-contain'></img></div>
         {loggingOut?<div className='alert logout'>Logging out....</div>:""}
         <div className='flex h-full  mt-5 items-center justify-evenly  gap-5 grow sm:justify-end md:mt-0'>
             

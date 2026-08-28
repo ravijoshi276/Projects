@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './context/AuthContext';
 import { useNavigate } from 'react-router';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const ReservationForm = () => {
     const navigate = useNavigate();
@@ -72,7 +73,7 @@ const ReservationForm = () => {
     });
 
     useEffect(() => {
-      axios.get('http://localhost:8000/api/tables')
+      axios.get(`${BASE_URL}/api/tables`)
         .then(response => setTables(response.data.results || response.data))
         .catch(err => console.error('Error fetching tables:', err));
     }, []);
@@ -115,7 +116,7 @@ const ReservationForm = () => {
       };
 
       try {
-        await axios.post('http://localhost:8000/api/reservations', payload, config);
+        await axios.post(`${BASE_URL}/api/reservations`, payload, config);
         setSubmitted(true);
         setFormData({
           customer_name: '',

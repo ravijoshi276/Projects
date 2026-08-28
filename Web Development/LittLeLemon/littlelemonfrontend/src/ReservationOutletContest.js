@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import axios from "axios";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function ReservationOutletContext(){
     const [reservationData, setReservationData] = useState(null);
@@ -13,7 +14,7 @@ export default function ReservationOutletContext(){
                     'Authorization': `Token ${token}`,
                 }
             };
-            axios.get('http://localhost:8000/api/reservations', config)
+            axios.get(`${BASE_URL}/api/reservations`, config)
                 .then(res => setReservationData(res.data.results || res.data))
                 .catch(err => console.error(err));
         }, [token])

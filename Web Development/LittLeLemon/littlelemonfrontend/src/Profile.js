@@ -1,6 +1,7 @@
 import Heading from "./Heading";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 
 export default function Profile  (){
@@ -20,7 +21,7 @@ export default function Profile  (){
     }
     const handleSubmit = async(e)=>{
         e.preventDefault();
-        const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/users/me/',{
+        const response = await fetch(`${BASE_URL}/auth/users/me/`,{
             method: "PATCH",
             headers:{
                 'Content-Type' : 'application/json',

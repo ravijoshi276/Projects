@@ -3,9 +3,9 @@ import BackButton from "./BackButton";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./context/AuthContext";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
-//  1. MOVE THIS OUTSIDE THE COMPONENT entirely.
-// This prevents it from regenerating and breaking your useEffect loop!
+
 const generateTimeOptions = () => {
   const options = [];
   for (let hour = 10; hour <= 23; hour++) {
@@ -79,7 +79,7 @@ export default function SingleReservationPage() {
   };
 
   useEffect(() => {
-    axios.get("https://little-lemon-backend-afqk.onrender.com/api/tables")
+    axios.get(`${BASE_URL}/api/tables`)
       .then(response => setTables(response.data.results || response.data))
       .catch(err => console.error("Error fetching tables:", err));
   }, []);
@@ -125,7 +125,7 @@ export default function SingleReservationPage() {
     };
 
     try {
-      await axios.patch(`https://little-lemon-backend-afqk.onrender.com/api/reservations/${id}/`, payload, config);
+      await axios.patch(`${BASE_URL}/api/reservations/${id}/`, payload, config);
       setSubmitted(true);
       // NOTE: Removed setStartTime("") and setEndTime("") so choices don't disappear on submit click!
     } catch (err) {

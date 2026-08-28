@@ -3,6 +3,7 @@ import { useAuth } from "./context/AuthContext";
 import { useOutletContext } from "react-router";
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function AddMenuItems(){
     const [isAdded, setIsAdded] = useState(false);
@@ -88,7 +89,7 @@ export default function AddMenuItems(){
                 data.append('compressed_image', compressedFile); 
             }
 
-            const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/menu-items", {
+            const response = await fetch(`${BASE_URL}/api/menu-items`, {
                 method: "POST",
                 headers: {
                     // Do NOT manually define Content-Type here; the browser needs to auto-inject the boundary token

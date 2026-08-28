@@ -1,4 +1,6 @@
 import AddEditGroups from "./AddEditGroups";
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export default function EditManager({props}){
-    return <AddEditGroups link="https://little-lemon-backend-afqk.onrender.com/api/groups/manager/users" title='Manager'/>
+    return <AddEditGroups link={`${BASE_URL}/api/groups/manager/users`} title='Manager'/>
 }

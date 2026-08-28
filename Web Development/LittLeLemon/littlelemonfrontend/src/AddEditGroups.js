@@ -4,6 +4,7 @@ import Heading from "./Heading";
 import Section from "./Section";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTrashCan}  from '@fortawesome/free-solid-svg-icons'
+
 export default function AddEditGroups(props){
     const [managers,setMangers]=useState([]);
     const [error,setError] =useState(false);
