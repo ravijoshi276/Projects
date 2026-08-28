@@ -6,6 +6,7 @@ import Heading from "./Heading";
 import Section from "./Section";
 import Modal from "./Modal";
 import React from "react";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function Reservations() {
     const {reservationData,cancleReservation} = useOutletContext();
@@ -48,7 +49,7 @@ export default function Reservations() {
         };
 
         try {
-            await axios.patch(`http://localhost:8000/api/reservations/${selectedId}/`, { status: "Cancelled" }, config);
+            await axios.patch(`${BASE_URL}/api/reservations/${selectedId}/`, { status: "Cancelled" }, config);
             
             cancleReservation(selectedId);
             

@@ -15,12 +15,13 @@ export default function EditOrders(){
     const [isSubmitted,setIsSubmitted] = useState(false);
     const [query,setQuery]= useState({id:"",delivery_crew:null,status:false});
     
+    const BASE_URL = process.env.REACT_APP_API_URL;
 
     useEffect(()=>{
         const fetchAndStichData = async()=>{
             setLoading(true);
             setError(false)
-            try{const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/groups/delivery-crew/users",{
+            try{const response = await fetch(`${BASE_URL}/api/groups/delivery-crew/users`,{
                 method:"GET",
                 headers:{
                     'Content-Type': 'application/JSON',
@@ -47,7 +48,7 @@ useEffect(()=>{
         const fetchAndStichData = async()=>{
             setLoading(true);
             setError(false)
-            try{const response = await fetch("http://127.0.0.1:8000/api/orders",{
+            try{const response = await fetch(`${BASE_URL}/api/orders`,{
                 method:"GET",
                 headers:{
                     'Content-Type': 'application/JSON',
@@ -74,7 +75,7 @@ useEffect(()=>{
 const handleSubmit = useCallback(async(id,deliveryCrew,status)=>{
     try {
         setError(false);
-        const response = await fetch(`http://127.0.0.1:8000/api/orders/${id}`,{
+        const response = await fetch(`${BASE_URL}/api/orders/${id}`,{
             method:"PATCH",
             headers:{
                     'Content-Type': 'application/JSON',

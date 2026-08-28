@@ -139,8 +139,8 @@ const Navitems = () => {
             <ul 
                 className={`
                     ${isOpen ? 'flex' : 'hidden'} 
-                    flex-col w-full gap-2 mt-4 transition-all duration-500 ease-in-out
-                    sm:flex sm:flex-row sm:items-center sm:gap-4 sm:mt-0 sm:ml-auto sm:w-full sm:justify-evenly border-solid border-[3px] border-[var(--border-color)] rounded-[20px] py-2
+                    flex-col w-full gap-2 mt-4 transition-all duration-500 ease-in-out border-none
+                    sm:flex sm:flex-row sm:items-center sm:gap-4 sm:mt-0 sm:ml-auto sm:w-full sm:justify-evenly sm:border-solid border-[3px] border-[var(--border-color)] rounded-[20px] py-2
                 `}
                 onClick={closeMenu}
             >

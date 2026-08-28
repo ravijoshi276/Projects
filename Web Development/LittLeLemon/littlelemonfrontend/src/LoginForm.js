@@ -4,6 +4,9 @@ import { useAuth } from "./context/AuthContext";
 import Heading from "./Heading";
 import Alert from "./Alert";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
+console.log(`${BASE_URL}/auth/token/login`)
 const LoginForm =()=>{
     const [credentials,setCredentials]= useState({
         username:'',password:''
@@ -25,10 +28,10 @@ const LoginForm =()=>{
         e.preventDefault();
         try{
             setError(false);
-            const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/token/login',{
+            const response = await fetch(`${BASE_URL}/auth/token/login`,{
                 method:'POST',
                 headers :{
-                    'Content-Type': 'application/JSON',
+                    'Content-Type': 'application/json',
                 },
                 body : JSON.stringify(credentials),
             });

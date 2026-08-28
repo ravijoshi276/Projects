@@ -1,5 +1,7 @@
 import { useState,useContext,createContext ,useEffect} from "react";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({children})=>{
@@ -10,7 +12,7 @@ export const AuthProvider = ({children})=>{
     const isLoggedIn = !!token;
    const fetchtUser = async(authtoken) =>{
         try{
-            const response = await fetch("https://little-lemon-backend-afqk.onrender.com/auth/users/me",{
+            const response = await fetch(`${BASE_URL}/auth/users/me`,{
                 method : 'GET',
                 headers :{
                     'Authorization': `Token ${authtoken}`,

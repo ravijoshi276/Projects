@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import BackButton from "./BackButton";
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 
 export default function SingleMenuItemEdit(){
@@ -48,7 +49,7 @@ export default function SingleMenuItemEdit(){
                 data.append('compressed_image', compressedFile); 
             }
 
-            const response = await fetch("https://little-lemon-backend-afqk.onrender.com/api/menu-items/"+id,{
+            const response = await fetch(`${BASE_URL}/api/menu-items/${id}`,{
                 method:'PATCH',
                 headers:{
                     

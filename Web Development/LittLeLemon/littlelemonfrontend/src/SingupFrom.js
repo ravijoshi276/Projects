@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate,NavLink } from "react-router";
 import Alert from "./Alert";
+
+const BASE_URL = process.env.REACT_APP_API_URL;
 function SignupForm(){
     const [formdata,setFromdata]=useState({
         first_name:'',
@@ -29,7 +31,7 @@ function SignupForm(){
         e.preventDefault();
         setError(false);
         try{
-            const response = await fetch('https://little-lemon-backend-afqk.onrender.com/auth/users/',{
+            const response = await fetch( `${BASE_URL}/auth/users/`,{
                 method:"POST",
                 headers :{
                     'Content-Type': 'application/JSON',
