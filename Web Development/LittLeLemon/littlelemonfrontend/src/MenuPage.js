@@ -193,21 +193,21 @@ const Menucard = ({ id, title, image, description, price, addfunc, loggedin, fea
         </div>
 
         {/* Footer Actions */}
-        <div className='btn-group flex flex-col lg:flex-row lg:items-center justify-between gap-2 mt-3 pt-3 border-t border-[#D9D9D9]/40'>
+        <div className='flex flex-col lg:flex-row lg:items-center justify-between gap-2 mt-3 pt-3 border-t border-[#D9D9D9]/40'>
             
             <div className="flex items-center justify-between lg:hidden">
               <span className='text-xs font-bold text-[#666666] uppercase tracking-wider'>Price</span>
               <span className="text-base font-extrabold text-[#495E57]">${price}</span>
             </div>
-
-            <div className="flex items-center">
+            <div className='flex w-full justify-between gap-[5%]'>
+            <div className="flex items-center w-[40%]">
               {!loggedin ? (
                 <span className='lemon msg text-[11px] font-medium text-[#666666] bg-[#EDEFEE] px-2.5 py-1 rounded-lg border border-[#D9D9D9]/50'>
                   🔒 Login to order
                 </span>
               ) : isAdded ? (
                 <NavLink 
-                  className='btn gotocart bg-[#F4CE14] hover:bg-[#D4B10B] text-[#333333] px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm text-center' 
+                  className='w-[40%] bg-[#F4CE14] hover:bg-[#D4B10B] text-[#333333] px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm text-center' 
                   to='/cart'
                 >
                   ✓ Go to Cart
@@ -216,12 +216,13 @@ const Menucard = ({ id, title, image, description, price, addfunc, loggedin, fea
             </div>
             
             <button 
-              className="btn addtocart w-full lg:w-auto bg-[#495E57] hover:bg-[#394B45] text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-sm active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed" 
+              className="w-[40%] lg:w-auto bg-[#495E57] hover:bg-[#394B45] text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-sm active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed" 
               onClick={handleClick} 
               disabled={isAdded || !loggedin}
             >
               {isAdded ? "Added" : "+ Add"}
             </button>
+          </div>
         </div>
 
       </div>

@@ -6,7 +6,7 @@ import placeholder_image from "../assets/images/menuitem-placeholder.png";
 const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
-    const { token, user } = useAuth();
+    const { token, user, isLoggedIn } = useAuth();
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -60,8 +60,10 @@ export const CartProvider = ({ children }) => {
             }
         };
 
-        fetchAndStitchCart();
-    }, [token, user]);
+       if (!isLoggedIn) {
+        return ;
+       } fetchAndStitchCart();
+    }, [token, user,isLoggedIn]);
    
     const orderItems = useCallback(async () => {
         setLoading(true);

@@ -297,6 +297,9 @@ a:focus-visible {
 */
 
 
+.lemon{
+  color: var(--color-secondary);
+}
 
 .profile-btns{
   margin: 0;
@@ -469,9 +472,7 @@ align-items: center;
 height: 60%;
 padding: 2%;
 }
-.lemon{
-  color: var(--color-secondary);
-}
+
 */
 /*Menu page 
 .cards {
