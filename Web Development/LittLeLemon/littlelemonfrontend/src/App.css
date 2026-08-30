@@ -1316,7 +1316,7 @@ footer h6{
   transform: scale(0.98);
 }
 
-{/*DashBoard Page*/}
+/*DashBoard Page*/
 .customer-reservation-card{
   border: 2px solid var(--shadow-color);
   border-radius: 10px ;
