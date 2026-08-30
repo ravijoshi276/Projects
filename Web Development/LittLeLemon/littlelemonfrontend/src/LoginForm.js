@@ -129,7 +129,7 @@ const LoginForm = () => {
         
         <div className="flex gap-3 lg:gap-10 w-full justify-center mt-2">
           <button type="button" onClick={resetCredentials} className="btn-outline border border-gray-300 px-4 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">Clear</button>
-          <button disabled={( credentials.username)} className="btn-primary btn-accent px-4 py-1.5 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed  font-medium  transition-colors">Login</button>
+          <button disabled={!( credentials.username && credentials.password)} className="btn-primary btn-accent px-4 py-1.5 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed  font-medium  transition-colors">Login</button>
         </div>
         <p className="text-sm text-gray-600 mt-2">Dont have an account?? <NavLink to='/sign-up' className="text-[var(--color-secondary)] hover:underline">Sign Up</NavLink></p>
       </form>
