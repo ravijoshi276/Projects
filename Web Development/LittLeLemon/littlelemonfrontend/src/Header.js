@@ -3,10 +3,10 @@ import { NavLink, useNavigate } from 'react-router';
 import { useAuth } from "./context/AuthContext";
 import { useCart } from './context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCartShopping,faLightbulb,faCaretDown,faSun,faMoon}  from '@fortawesome/free-solid-svg-icons'
+import {faCartShopping,faCaretDown,faSun,faMoon}  from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from './context/ThemeContext';
 import { useState } from 'react';
-import Alert from './Alert';
+
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 
