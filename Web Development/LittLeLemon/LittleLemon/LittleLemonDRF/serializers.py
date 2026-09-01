@@ -4,7 +4,7 @@ from datetime import date,timedelta
 from djoser.serializers import UserCreatePasswordRetypeSerializer,TokenSerializer,PasswordResetConfirmRetypeSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
-
+from django.utils.translation import gettext_lazy as _
 
 class CategorySerializer (serializers.ModelSerializer):
     class Meta:
@@ -179,23 +179,39 @@ class ReservationSerializer(serializers.ModelSerializer):
         return value
 
 
-
 class CustomPasswordResetConfirmationRetypeSerializer(PasswordResetConfirmRetypeSerializer):
-    current_password = serializers.CharField(style={'input_type':'password'})
+    current_password = serializers.CharField(
+        style={'input_type': 'password'},
+        write_only=True  # Production rule: Never expose passwords in responses
+    )
 
     class Meta:
         fields = ('uid', 'token', 'new_password', 're_new_password', 'current_password')
 
-
-
     def validate(self, attrs):
-        #Validating attrs and token
+        # 1. Grab fields 
+        uid = attrs.get('uid')
+        current_password = attrs.get('current_password')
+
+        # 2. uid-to-user decoding 
+        try:
+            from djoser.utils import decode_uid
+            user_id = decode_uid(uid)
+            user = User.objects.get(pk=user_id)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            # Production security: Raise a generic validation error 
+            # to hide whether the user ID actually exists.
+            raise serializers.ValidationError(
+                {"non_field_errors": [_("Invalid reset link or token.")]}
+            )
+
+        # 3. Verify old password against the database record
+        if not user.check_password(current_password):
+            raise serializers.ValidationError(
+                {"current_password": [_("The old password does not match.")]}
+            )
+
+        # 4. validate the token and update the password
+        
         attrs = super().validate(attrs)
-
-        user = self.user
-        self.current_password = attrs.get('current_password')
-
-        if user and not user.check_password(self.current_password):
-            raise serializers.ValidationError({"current_password":'The old password do not match'})
-
         return attrs
