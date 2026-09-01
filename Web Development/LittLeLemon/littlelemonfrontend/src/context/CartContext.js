@@ -91,7 +91,7 @@ export const CartProvider = ({ children }) => {
                         : item
                 );
             }
-            return [...prevCart, { id: productid, quantity: 1, unit_price: price, title: title, price: price, image: image }];
+            return [...prevCart, { id: productid, quantity: 1, unit_price: price, title: title, price: price, image_url: image }];
         });
        
         try {
