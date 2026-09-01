@@ -153,13 +153,12 @@ DJOSER = {
     'USER_ID_FIELD':'username',
     'LOGIN_FIELD': 'username',  
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'PASSWORD_RESET_CONFIRM_RETYPE':True,
+    
     'SERIALIZERS': {
         'user_create_password_retype': 'LittleLemonDRF.serializers.UserCreationSerializer',
         'current_user': 'LittleLemonDRF.serializers.CustomUserSerializer',
         'token': 'LittleLemonDRF.serializers.CustomTokenSerializer',
-        'password_reset_confirm_retype': 'LittleLemonDRF.serializers.CustomPasswordResetConfirmationRetypeSerializer',
-    },
+    }
 }
 
 

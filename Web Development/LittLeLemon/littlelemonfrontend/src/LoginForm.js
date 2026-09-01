@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "./context/AuthContext";
 import Heading from "./Heading";
 import Alert from "./Alert";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -64,7 +64,7 @@ const LoginForm = () => {
 
     } catch (err) {
       setError(true);
-      console.error(err.message);
+    
     }
   };
 

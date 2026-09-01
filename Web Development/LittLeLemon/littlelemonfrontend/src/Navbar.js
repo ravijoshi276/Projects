@@ -24,6 +24,7 @@ import Reservations from './Reservations';
 import ReservationOutletContext from './ReservationOutletContest';
 import SingleReservatioPage  from './SingleReservationPage';
 import About from './About';
+import PasswordReset from './PasswordResert';
 import { useState } from 'react';
 
 export default function Navbar (){
@@ -55,7 +56,8 @@ return (<BrowserRouter>
             <Route path='user/reservations/:id' element={<SingleReservatioPage />}></Route>
         </Route>
             <Route path='/user/profile' element={<Profile />}></Route>
-        
+            <Route path='/reset-password' element={<PasswordReset />}></Route>
+
             <Route path='/orders' element={<Orders />}></Route>
             <Route path='/cart' element ={<Cart />}></Route>
         </Route>
