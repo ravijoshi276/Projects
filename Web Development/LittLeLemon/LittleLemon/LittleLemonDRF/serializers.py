@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from datetime import date,timedelta
-from djoser.serializers import UserCreatePasswordRetypeSerializer,TokenSerializer
+from djoser.serializers import UserCreatePasswordRetypeSerializer,TokenSerializer,PasswordResetConfirmRetypeSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
 
@@ -177,3 +177,25 @@ class ReservationSerializer(serializers.ModelSerializer):
             )
         
         return value
+
+
+
+class CustomPasswordResetConfirmationRetypeSerializer(PasswordResetConfirmRetypeSerializer):
+    current_password = serializers.CharField(style={'input_type':'password'})
+
+    class Meta:
+        fields = ('uid', 'token', 'new_password', 're_new_password', 'current_password')
+
+
+
+    def validate(self, attrs):
+        #Validating attrs and token
+        attrs = super().validate(attrs)
+
+        user = self.user
+        self.current_password = attrs.get('current_password')
+
+        if user and not user.check_password(self.current_password):
+            raise serializers.ValidationError({"current_password":'The old password do not match'})
+
+        return attrs
