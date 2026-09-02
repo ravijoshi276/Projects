@@ -423,6 +423,14 @@
             "markers": "python_version >= '3.10'",
             "version": "==7.0.0"
         },
+        "django-rest-passwordreset": {
+            "hashes": [
+                "sha256:2aba471960908e8acc33f04b3381184c980060c283060495c4d34642526f5bfa",
+                "sha256:4585842a0dce93c7c27fde86da1aea45c9bf5696aad1c880eba2b5af2c645e4d"
+            ],
+            "index": "pypi",
+            "version": "==1.6.0"
+        },
         "djangorestframework": {
             "hashes": [
                 "sha256:2323a5111837e0b784dcb8323abc78ecc54fa2a5af7aff2677cf50cdd849477f",
