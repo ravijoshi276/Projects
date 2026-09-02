@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAdminUser
 from django.shortcuts import  get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.models import Group, User
-
+from LittleLemonDRF.utils import dispatch_async_email
 from rest_framework import viewsets
 from rest_framework import status
 
@@ -185,6 +185,23 @@ class TableDetailsDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TableSeralizer
     permission_classes=[IsAuthenticated,IsManager]
 
+    def perform_update(self, serializer):
+        old_instance = self.get_object()
+        old_status = old_instance.status
+        
+        reservation = serializer.save()
+        
+        if old_status != reservation.status:
+            dispatch_async_email(
+                subject="Reservation Update 🔔",
+                template_name="emails/reservation_updated.html",
+                context={
+                    "username": reservation.customer_name,
+                    "status": reservation.status
+                },
+                recipient_list=[reservation.email],
+                fallback_text=f"Your reservation status has changed to {reservation.status}."
+            )
 class ReservationsView(generics.ListCreateAPIView):
     serializer_class = ReservationSerializer
     permission_classes = [IsAuthenticated]
@@ -194,6 +211,21 @@ class ReservationsView(generics.ListCreateAPIView):
             return Reservation.objects.all().filter(user= self.request.user)
         else: #For Manager and other Staff members
             return Reservation.objects.all()
+
+    def perform_create(self, serializer):
+        reservation = serializer.save()
+        
+        dispatch_async_email(
+            subject="Your Reservation is Confirmed! 🎉",
+            template_name="emails/reservation_confirmed.html",
+            context={
+                "username": reservation.user.username,
+                "date": reservation.date
+            },
+            recipient_list=[reservation.user.email],
+            fallback_text=f"Your reservation for {reservation.date} is confirmed."
+        )
+
 
 
 class ReservationUpdateView(generics.RetrieveUpdateAPIView):

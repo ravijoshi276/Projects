@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'anymail',
+    'django_rest_passwordreset',
 ]
 
 # Dynamically inject Debug Toolbar only during local development
@@ -52,6 +54,7 @@ if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
 
 MIDDLEWARE = [
+    
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -62,6 +65,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+
 
 # Append Debug Toolbar middleware dynamically if debugging
 if DEBUG:
@@ -208,3 +214,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Configuring Email
+EMAIL_BACKEND = 'anymail.backends.brevo.EmailBackend'
+
+ANYMAIL = {
+    "BREVO_API_KEY": os.environ.get("BREVO_API_KEY"),
+}
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")

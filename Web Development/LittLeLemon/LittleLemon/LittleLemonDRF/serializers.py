@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from datetime import date,timedelta
+from rest_framework.validators import UniqueValidator
 from djoser.serializers import UserCreatePasswordRetypeSerializer,TokenSerializer,PasswordResetConfirmRetypeSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
@@ -111,6 +112,17 @@ class CustomUserSerializer(BaseUserSerializer):
         model =User
         fields = ['id','username','email',"first_name",'last_name']
         read_only_fields = ['username','id']
+        extra_kwargs = {
+            'email': {
+                'required': True,
+                'validators': [
+                    UniqueValidator(
+                        queryset=User.objects.all(),
+                        message="A user with this email already exists."
+                    )
+                ]
+            }
+        }
 
         def to_representation(self,instance):
             """
