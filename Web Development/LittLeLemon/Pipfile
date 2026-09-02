@@ -15,8 +15,8 @@ dj-database-url = "*"
 whitenoise = "*"
 djangorestframework = "*"
 gunicorn = "*"
-django-rest-passwordreset = "*"
 django-anymail = {extras = ["brevo"], version = "*"}
+django-rest-passwordreset = "*"
 
 [dev-packages]
 
