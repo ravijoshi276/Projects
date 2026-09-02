@@ -2,8 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
-
-
+from django.contrib.auth.models import AbstractUser
 
 
 
@@ -28,9 +27,6 @@ class MenuItem(models.Model):
         return self.title
 
 
-# ==========================================
-# MODEL SIGNAL RECEIVERS FOR IMAGE CLEANUP
-# ==========================================
 
 @receiver(post_delete, sender=MenuItem)
 def delete_image_on_item_delete(sender, instance, **kwargs):

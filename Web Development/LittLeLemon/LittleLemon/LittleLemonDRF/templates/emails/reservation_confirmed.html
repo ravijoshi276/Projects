@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .highlight { color: #4CAF50; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Hello, {{ username }}!</h2>
+        <p>Great news! Your booking has been processed successfully.</p>
+        <p>Your reservation date is set for: <span class="highlight">{{ date }}</span>.</p>
+        <p>Thank you for choosing us!</p>
+    </div>
+</body>
+</html>

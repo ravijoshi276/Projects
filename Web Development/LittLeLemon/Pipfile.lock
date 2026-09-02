@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a755a55f547fbb63ca8e98214606857c0a871658683e1e8e1fd3acb84889633d"
+            "sha256": "44b252ac6086623b24dd1178dfb8a09220e68ce41b41108996827967e29d8b27"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -393,6 +393,17 @@
             "index": "pypi",
             "markers": "python_version >= '3.12'",
             "version": "==6.1"
+        },
+        "django-anymail": {
+            "extras": [
+                "brevo"
+            ],
+            "hashes": [
+                "sha256:299fb12a21ac4101e9706c2ade461d18deacbb6bc3750cfa6ca08aeea1fc9442",
+                "sha256:cb482b0e2b0aea665c83d49e3f13bb0673210aa0de285b1748a3b5e6277fc826"
+            ],
+            "markers": "python_version >= '3.10'",
+            "version": "==15.1"
         },
         "django-cors-headers": {
             "hashes": [
