@@ -22,57 +22,46 @@ class MenuItem(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     image_url = models.URLField(max_length=500,blank=True,null=True)
     description = models.TextField(blank=True,null=True)
-    compressed_image = models.ImageField(upload_to='compressed_images_menupage/', default='menuitem-placeholder.png')
+    compressed_image = models.ImageField(upload_to='LittleLemonFiles/CompressedImages/', default='LittleLemonFiles/CompressedImages/menuitem-placeholder.png')
+
     def __str__(self):
         return self.title
 
 
+PLACEHOLDER = "menuitem-placeholder.png"
+
 
 @receiver(post_delete, sender=MenuItem)
 def delete_image_on_item_delete(sender, instance, **kwargs):
-    """
-    Automated cleanup trigger: Runs immediately AFTER a MenuItem is deleted.
-    Ensures that physical image files do not become orphaned on the storage system.
-    """
     image = instance.compressed_image
-    
-    # Safety Check: Verify the image exists, has a valid filename, and 
-    # ensures we NEVER accidentally delete the default menu placeholder asset.
-    if image and image.name and image.name != 'menuitem-placeholder.png':
-        
-        # Uses Django's abstract storage layer. This allows the deletion logic 
-        # to work locally now, and scale to AWS S3/Google Cloud later without code modifications.
+
+    if (
+        image
+        and image.name
+        and image.name != PLACEHOLDER
+    ):
         image.storage.delete(image.name)
 
 
 @receiver(pre_save, sender=MenuItem)
 def delete_old_image_on_change(sender, instance, **kwargs):
-    """
-    Automated optimization trigger: Runs immediately BEFORE a MenuItem update is saved.
-    Prevents storage bloat by purging old images when a user uploads a replacement image.
-    """
-    # If the instance has no primary key (ID), it is a new creation. 
-    # There is no historical image data to look up or delete yet.
     if not instance.pk:
-        return False
+        return
 
-    # Fetch the existing version of the object directly from the database 
-    # to compare its current storage state against the incoming modifications.
     try:
         old_item = sender.objects.get(pk=instance.pk)
     except sender.DoesNotExist:
-        return False
+        return
 
     old_image = old_item.compressed_image
     new_image = instance.compressed_image
 
-    # Check if a new image asset has actually been uploaded to replace the old one
-    if old_image != new_image:
-        
-        # Safety Check: Guard against empty references and shield the primary placeholder asset
-        if old_image and old_image.name and old_image.name != 'menuitem-placeholder.png':
-            
-            # Execute cloud-safe file removal for the deprecated asset
+    if old_image.name != new_image.name:
+        if (
+            old_image
+            and old_image.name
+            and old_image.name != PLACEHOLDER
+        ):
             old_image.storage.delete(old_image.name)
 
 
