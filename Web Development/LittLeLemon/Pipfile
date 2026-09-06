@@ -17,6 +17,8 @@ djangorestframework = "*"
 gunicorn = "*"
 django-anymail = {extras = ["brevo"], version = "*"}
 django-rest-passwordreset = "*"
+cloudinary = "*"
+django-cloudinary-storage = "*"
 
 [dev-packages]
 

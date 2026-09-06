@@ -7,6 +7,7 @@ import os
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
+from urllib.parse import urlparse, parse_qsl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -103,12 +104,17 @@ WSGI_APPLICATION = 'LittleLemon.wsgi.application'
 
 # If Render provides a pooled/direct connection string, use it; otherwise read standard keys from .env
 if os.environ.get('DATABASE_URL'):
+    tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': tmpPostgres.path.replace('/', ''),
+        'USER': tmpPostgres.username,
+        'PASSWORD': tmpPostgres.password,
+        'HOST': tmpPostgres.hostname,
+        'PORT': 5432,
+        'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
+    }
     }
 else:
     DATABASES = {

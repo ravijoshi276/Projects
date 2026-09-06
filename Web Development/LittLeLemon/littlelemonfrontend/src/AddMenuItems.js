@@ -46,21 +46,35 @@ export default function AddMenuItems(){
 
             // 2. Compress payload safely
             const options = {
-                maxSizeMB: 0.01, //10 kb images
+                maxSizeMB: 0.01, 
                 useWebWorker: true,
-                maxWidthOrHeight: 400,    // Force-resize dimensions down (Crucial for <10KB)
-                initialQuality: 0.5    
+                maxWidthOrHeight: 400,    
+                initialQuality: 0.4
+
             };
-            const compressedBlob = await imageCompression(imageBlob, options);//Compressed Image 
-            
-            // 3. Create file structure matching native inputs
-            const file = new File([compressedBlob], `${formData.title || 'menu_item'}.jpg`, { type: "image/jpeg" });
-            setCompressedFile(file);
-        } catch (err) {
-            console.error("Failed to fetch or compress image from URL:", err);
-        } finally {
-            setIsCompressing(false);
-        }
+            let compressedBlob;
+    try {
+        compressedBlob = await imageCompression(imageBlob, options);
+    } catch (compressionError) {
+        console.warn("Target 10KB too small for this asset, applying fallback size:", compressionError);
+ 
+        const fallbackOptions = { ...options, maxSizeMB: 0.03, initialQuality: 0.6 };
+        compressedBlob = await imageCompression(imageBlob, fallbackOptions);
+    }
+    //3. Creating file structure   
+ 
+    const fileName = `${(formData.title || 'menu_item').replace(/[^a-z0-9]/gi, '_').toLowerCase()}.jpg`;
+    const file = new File([compressedBlob], fileName, { type: "image/jpeg" });
+    
+    setCompressedFile(file);
+   
+
+} catch (error) {
+    console.error("Failed to fetch or compress image URL. Check CORS headers on the image host:", error);
+   
+} finally{
+    setIsCompressing(false);
+}
     };
 
     const handleClear = () => {
@@ -92,7 +106,6 @@ export default function AddMenuItems(){
             const response = await fetch(`${BASE_URL}/api/menu-items`, {
                 method: "POST",
                 headers: {
-                    // Do NOT manually define Content-Type here; the browser needs to auto-inject the boundary token
                     'Authorization': `Token ${token}`,
                 },
                 body: data
@@ -120,8 +133,8 @@ export default function AddMenuItems(){
             <div className={isAdded ? 'alert success' : "hidden"}>
                 {error ? "Some Error occurred" : "Item Added successfully"}
             </div>
-            <form onSubmit={handleSubmit} className="single-item-form">
-                <div className="form-details">
+            <form onSubmit={handleSubmit} className="add-single-item-form">
+                <div className="single-form-details">
                 <div>
                     <label htmlFor='title'>Name</label>
                     <input type="text" id='title' name="title" value={formData.title} onChange={handleChange} maxLength="255" onBlur={handleBlur} />
@@ -141,8 +154,8 @@ export default function AddMenuItems(){
                         onBlur={handleImageUrlBlur} 
                         required 
                     />
-                    {isCompressing && <small style={{ display: 'block', color: 'orange' }}>Downloading and optimizing image asset...</small>}
-                    {compressedFile && <small style={{ display: 'block', color: 'green' }}>✓ Image compressed successfully ({(compressedFile.size / 1024).toFixed(1)} KB)</small>}
+                    {isCompressing && <small className="block w-full text-orange-700">Downloading and optimizing image asset...</small>}
+                    {compressedFile && <small className="block w-full text-green-900">✓ Image compressed successfully ({(compressedFile.size / 1024).toFixed(1)} KB)</small>}
                 </div>
                 <div>
                     <label htmlFor='category'>Category</label>

@@ -712,7 +712,7 @@ input:focus, textarea:focus {
   flex-grow: 1;
 }
 
-.single-item-form {
+.add-single-item-form {
   display: flex;
   width: 70vw;
   justify-content: space-between;
@@ -721,15 +721,16 @@ input:focus, textarea:focus {
   padding: 10%;
 }
 
-.form-details > div {
+.single-form-details > div {
   margin: 3% 0;
   display: flex;
   width: 100%;
   gap: 10%;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.single-item-form .submit-btn, .single-item-form .clear-btn {
+.add-single-item-form .submit-btn, .add-single-item-form .clear-btn {
   width: 40%;
   height: 70%;
 }

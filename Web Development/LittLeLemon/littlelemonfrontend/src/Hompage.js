@@ -9,7 +9,7 @@ export default function Homepage () {
         <main className="mx-5 lg:mx-[5%]">
   {isLoggedIn ? (
     <div className="welcome-message text-base md:text-lg mb-6 font-sans">
-      Welcome {group} <span className="lemon font-semibold text-[var(--color-secondary)]">{loading ? "Loading...." : user.first_name} !!!</span>
+      Welcome {group} <span className="lemon font-semibold text-[var(--color-secondary)]">{loading ? "Loading...." : user && user.first_name?user.first_name:""} !!!</span>
     </div>
   ) : ""}
 
