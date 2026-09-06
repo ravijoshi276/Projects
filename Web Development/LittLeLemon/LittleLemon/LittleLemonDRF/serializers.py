@@ -6,11 +6,17 @@ from djoser.serializers import UserCreatePasswordRetypeSerializer,TokenSerialize
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
 from django.utils.translation import gettext_lazy as _
-
+from django.utils.text import slugify
 class CategorySerializer (serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'title', 'slug']
+        read_only_fields = ['id','slug']
+
+    def validate(self, attrs):
+        if 'title' in attrs:
+            attrs['slug'] = slugify(attrs['title'])
+        return attrs
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
