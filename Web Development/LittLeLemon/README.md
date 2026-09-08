@@ -20,8 +20,7 @@ LittleLemon is a full-stack web application that lets customers browse a menu an
 
 The goal was to model a real restaurant's workflow rather than just a CRUD demo: one login system, three distinct roles, and backend-enforced permissions so each user only ever sees and can do what their role allows.
 
-<!-- SCREENSHOT: Add a screenshot or short GIF here of the customer-facing menu/ordering flow. This matters more than any paragraph of description — put it near the top. -->
-
+![Little Lemon](./recoding.gif)
 ## The Problem
 
 Small and medium sized restaurants often juggle separate systems for taking orders online, coordinating delivery, and managing the menu/staff. This project explores what a single, role-aware system for all three could look like.
