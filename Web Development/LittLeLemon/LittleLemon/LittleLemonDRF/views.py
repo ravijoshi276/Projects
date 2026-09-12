@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
 from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderSerializer, UserSerilializer,TableSeralizer,ReservationSerializer
 from rest_framework.response import Response
-from .permissions import IsManager
+from .permissions import IsManager,ReserVationPermission
 from rest_framework.permissions import IsAdminUser
 from django.shortcuts import  get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -230,7 +230,7 @@ class ReservationsView(generics.ListCreateAPIView):
 
 class ReservationUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class=ReservationSerializer
-    permission_classes= [ IsAuthenticated ]
+    permission_classes= [ ReserVationPermission ]
     def get_queryset(self):
         if self.request.user.groups.count()==0:#For a normal user
             return Reservation.objects.all().filter(user= self.request.user)

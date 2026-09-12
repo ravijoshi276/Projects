@@ -182,7 +182,33 @@ class ReservationSerializer(serializers.ModelSerializer):
         ]
         # Make 'created_at' read-only so clients can't pass/manipulate it manually
         read_only_fields = ['created_at','user']
+    def validate(self, attrs):
+        user = self.context['request'].user
+        is_manager = user.groups.filter(name='Manager').exists()
 
+        if self.instance and self.instance.date < date.today():
+                    raise serializers.ValidationError(
+                        "Cannot update a reservation whose date has passed."
+                    )
+        if is_manager:
+            if 'status' in attrs:
+                if attrs['status'] not in (Reservation.StatusChoices.CONFIRMED,Reservation.StatusChoices.CANCELLED):
+                    raise serializers.ValidationError({'status':"invalid Status"})
+
+                return attrs
+
+        #Normal user can  only cancel status
+        if set(attrs.keys()) != {"status"}:
+            raise serializers.ValidationError(
+                "You can only cancel the reservation."
+            )
+        if attrs['status'] != Reservation.StatusChoices.CANCELLED:
+            raise serializers.ValidationError(
+                            "You can only cancel the reservation."
+                        )
+
+
+        return attrs
     def validate_date(self, value):
         """
         Validates that the reservation date is at least 1 day in advance.
@@ -194,7 +220,10 @@ class ReservationSerializer(serializers.ModelSerializer):
                 "Reservations must be made at least one day in advance."
             )
         
+        
         return value
+
+   
 
 
 class CustomPasswordResetConfirmationRetypeSerializer(PasswordResetConfirmRetypeSerializer):
