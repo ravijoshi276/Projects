@@ -19,7 +19,7 @@ export default function Sidebar(){
     }
     return (<aside className='sidebar'>
     <NavLink to="../dashboard">Home</NavLink>
-    {group=='manager'?<div id='menu'className={isClickedMenu?'sidebar-items bold clicked':"sidebar-items bold"} onClick={handleMenuclick}>Menu items <FontAwesomeIcon icon={faCaretDown} size='lg' className='cart'/></div>:""}
+    {group==='manager'?<div id='menu'className={isClickedMenu?'sidebar-items bold clicked':"sidebar-items bold"} onClick={handleMenuclick}>Menu items <FontAwesomeIcon icon={faCaretDown} size='lg' className='cart'/></div>:""}
     <ul className={isClickedMenu?"edit-items ":"hidden"}>
         <li><NavLink to="./menu-items">Edit/Delete Items</NavLink></li>
         <li><NavLink to="./menu-items/add">Add Items</NavLink></li>
@@ -29,6 +29,7 @@ export default function Sidebar(){
         <li><NavLink to="./managers">Managers</NavLink></li>
         <li><NavLink to="./delivery-crew">Delivery Crew</NavLink></li>
     </ul>
+    {group==='manager'?<NavLink to="./manage/reservations" className="font-semibold">Reservations</NavLink>:""}
     <div ><NavLink className='bold dashboard-orders' to="./orders">Orders</NavLink></div>
     </aside>)
 }

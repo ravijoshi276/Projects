@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Category, MenuItem, Cart, Order, OrderItem,Table,Reservation
-from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderSerializer, UserSerilializer,TableSeralizer,ReservationSerializer
+from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderSerializer, UserSerilializer,TableSeralizer,ReservationSerializer,ReservationUpdateSerializer
 from rest_framework.response import Response
 from .permissions import IsManager,ReserVationPermission
 from rest_framework.permissions import IsAdminUser
@@ -229,7 +229,7 @@ class ReservationsView(generics.ListCreateAPIView):
 
 
 class ReservationUpdateView(generics.RetrieveUpdateAPIView):
-    serializer_class=ReservationSerializer
+    serializer_class=ReservationUpdateSerializer
     permission_classes= [ ReserVationPermission ]
     def get_queryset(self):
         if self.request.user.groups.count()==0:#For a normal user

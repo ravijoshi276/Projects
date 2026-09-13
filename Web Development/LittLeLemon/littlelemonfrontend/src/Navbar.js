@@ -53,7 +53,7 @@ return (<BrowserRouter>
         <Route element={<ProtectedRouteCart/>}>
         <Route element={<ReservationOutletContext />}>
             <Route path='user/reservations' element={<Reservations />}></Route>
-            <Route path='user/reservations/:id' element={<SingleReservatioPage />}></Route>
+            
         </Route>
             <Route path='/user/profile' element={<Profile />}></Route>
             <Route path='/reset-password' element={<PasswordReset />}></Route>
@@ -73,6 +73,10 @@ return (<BrowserRouter>
                     <Route path='managers' element ={<EditManager />} />
                     <Route path='delivery-crew' element ={<EditDeliveryCrew />} />
                     <Route path='orders' element ={<EditOrders />} />
+                </Route>
+                <Route element={<ReservationOutletContext/>} >
+                    <Route path='manage/reservations' element={<Reservations isManager/>}></Route>
+                    <Route path='manage/reservations/:id' element={<SingleReservatioPage  />}></Route>
                 </Route>
                 
             </Route>

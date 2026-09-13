@@ -182,6 +182,29 @@ class ReservationSerializer(serializers.ModelSerializer):
         ]
         # Make 'created_at' read-only so clients can't pass/manipulate it manually
         read_only_fields = ['created_at','user']
+
+class ReservationUpdateSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+            queryset=User.objects.all(),
+            default=serializers.CurrentUserDefault()
+        )
+    class Meta:
+        model = Reservation
+        fields = [
+            'id', 
+            'user', 
+            'table', 
+            'customer_name', 
+            'email', 
+            'phone', 
+            'number_of_guests', 
+            'date', 
+            'time_slot', 
+            'status', 
+            'created_at'
+        ]
+        # Make 'created_at' read-only so clients can't pass/manipulate it manually
+        read_only_fields = ['created_at','user']
     def validate(self, attrs):
         user = self.context['request'].user
         is_manager = user.groups.filter(name='Manager').exists()
@@ -220,8 +243,6 @@ class ReservationSerializer(serializers.ModelSerializer):
                 "Reservations must be made at least one day in advance."
             )
         
-        
-        return value
 
    
 

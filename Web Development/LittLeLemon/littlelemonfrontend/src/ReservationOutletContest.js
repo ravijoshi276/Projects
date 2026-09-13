@@ -15,10 +15,11 @@ export default function ReservationOutletContext(){
                 }
             };
             axios.get(`${BASE_URL}/api/reservations`, config)
-                .then(res => setReservationData(res.data.results || res.data))
+                .then(res => setReservationData(res.data.results.toReversed() || res.data))
                 .catch(err => console.error(err));
         }, [token])
-
+        
+       
         const cancleReservation = (id)=>{
             setReservationData(prev => 
                 prev.map(item => item.id === id ? { ...item, status: "Cancelled" } : item)
@@ -27,6 +28,11 @@ export default function ReservationOutletContext(){
         const modifyReservations = ({item})=>{
             setReservationData(prev =>prev.map(i=>i.id===item.id? {...item}:i))
         }
+        const confirmReservation =(id)=>{
+             setReservationData(prev => 
+                prev.map(item => item.id === id ? { ...item, status: "Confirmed" } : item)
+            );
+        }
     
-    return <Outlet context={{reservationData,cancleReservation,modifyReservations}} />
+    return <Outlet context={{reservationData,cancleReservation,modifyReservations,confirmReservation}} />
 }
