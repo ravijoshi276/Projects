@@ -1,0 +1,83 @@
+
+@import "tailwindcss";
+
+
+
+:root {
+  --weather-bg: #111827;        /* Deep midnight background */
+  --weather-surface: #1F2937;   /* Elevated card panels */
+  --weather-text-main: #F3F4F6; /* Highly readable white text */
+  --weather-text-sub: #9CA3AF;  /* Muted gray text labels */
+
+  /* Weather Metrics & Accents */
+  --weather-sunny: #F59E0B;     /* Amber yellow */
+  --weather-rain: #3B82F6;      /* Bright blue */
+  --weather-wind: #10B981;      /* Crisp green */
+  --weather-danger: #EF4444;    /* Alert red */
+}
+/* --- Global Reset & Design System Base --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--weather-bg);
+  color: var(--weather-text-main);
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar for the dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--weather-surface);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--weather-text-sub);
+}
+
+::selection {
+  background-color: var(--weather-sunny);
+  color: var(--weather-bg);
+}
+
+input {
+  background-color: var(--weather-surface);
+  color: var(--weather-text-main);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease-in-out;
+}
+
+input::placeholder {
+  color: var(--weather-text-sub);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--weather-sunny);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+input:invalid {
+  border-color: var(--weather-danger);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+
+datalist, option {
+  background-color: var(--weather-surface);
+  color: var(--weather-text-main);
+}
