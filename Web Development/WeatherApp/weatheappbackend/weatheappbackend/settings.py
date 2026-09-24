@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from urllib.parse import urlparse, parse_qsl
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -75,6 +75,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'weatheappbackend.wsgi.application'
 
 
+# Add these at the top of your settings.py
+import os
+from dotenv import load_dotenv
+from urllib.parse import urlparse, parse_qsl
+
+load_dotenv()
+
+# Replace the DATABASES section of your settings.py with this
+
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
@@ -86,6 +95,20 @@ DATABASES = {
         "PASSWORD": os.environ.get("PASSWORD"),
         "HOST": os.environ.get('HOST'),
         "PORT": os.environ.get('PORT'),
+    }
+}
+if not DEBUG:
+    tmpPostgres = urlparse(os.environ.get("DATABASE_URL"))
+DATABASES = {
+    
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': tmpPostgres.path.replace('/', ''),
+        'USER': tmpPostgres.username,
+        'PASSWORD': tmpPostgres.password,
+        'HOST': tmpPostgres.hostname,
+        'PORT': 5432,
+        'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
     }
 }
 
@@ -151,5 +174,5 @@ MAILERS = {
     },
 }
 
-CORS_ALLOW_HEADERS = "*" 
-CORS_ALLOWED_ORIGINS =os.environ.get('ALLOWED_ORIGINS').split(',')
+ALLOW_HOSTS = [os.environ.get('ALLOWED_HEADERS')]
+CORS_ALLOWED_ORIGINS =[os.environ.get('ALLOWED_ORIGINS')]
