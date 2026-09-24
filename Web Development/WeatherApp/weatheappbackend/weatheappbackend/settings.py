@@ -27,7 +27,7 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  True if os.environ.get('DEBUG')=='TRUE' else False
 
 ALLOWED_HOSTS = []
 
@@ -99,8 +99,10 @@ DATABASES = {
         "PORT": os.environ.get('PORT'),
     }
 }
+
+tmpPostgres = urlparse(os.environ.get("DATABASE_URL"))
 if not DEBUG:
-    tmpPostgres = urlparse(os.environ.get("DATABASE_URL"))
+    
     DATABASES = {
         
         'default': {
