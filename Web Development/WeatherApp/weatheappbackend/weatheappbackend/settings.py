@@ -27,7 +27,7 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  True if os.environ.get('DEBUG')=='TRUE' else False
+DEBUG =  True if os.environ.get('DEBUG')=='True' else False
 
 ALLOWED_HOSTS = []
 
@@ -177,6 +177,22 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+ALLOWED_HOSTS = []
 
-ALLOW_HOSTS = [os.environ.get('ALLOWED_HEADERS')]
-CORS_ALLOWED_ORIGINS =[os.environ.get('ALLOWED_ORIGINS')]
+if DEBUG:
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+else:
+    render_host = os.environ.get('ALLOWED_HOSTS')
+    if render_host:
+        ALLOWED_HOSTS.append(render_host)
+        ALLOWED_HOSTS.append(f"www.{render_host}")
+
+CORS_ALLOWED_ORIGINS=[]
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5173",
+    ]
+else:
+    # Populates via string arrays like "https://vercel.app,https://littlelemon.com" on Render
+    cors_env = os.environ.get("ALLOWED_ORIGINS", "")
+    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_env.split(",") if origin.strip()] if cors_env else []
