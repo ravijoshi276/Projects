@@ -1,6 +1,6 @@
 import  { useRef, useEffect,  } from 'react';
 import 'weather-icons/css/weather-icons.min.css';
-import 'weather-icons/css/weather-icons-wind.min.css';
+
 
 import { timeToMinutes } from './others/dataHelper';
 import { getWeatherIconString } from './wmoWeatherIcons';
