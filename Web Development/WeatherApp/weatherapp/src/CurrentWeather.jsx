@@ -6,14 +6,14 @@ import { timeToMinutes } from './others/dataHelper';
 import { getWeatherIconString } from './wmoWeatherIcons';
 import HourlyWeatherData from './HourlyWeatherData';
 export default function CurrentWeather({daily_data,current_data,hourly_data,current_units}) {
-    console.log("this is data i need",daily_data)
+
     const scrollContainerRef = useRef(null);
     const temperature = `${current_data.temperature_2m.toFixed(1)} ${current_units.temperature_2m}`;
     const feelsLike = `${current_data.apparent_temperature.toFixed(1)} ${current_units.apparent_temperature}`;
-    const curr_date = current_data.time;
+   
 
-    const dateKey = curr_date.split(',')[1].trim();
-    const nowTimeStr = curr_date.split(',')[2].slice(0, 9).trim();
+    const dateKey = current_data?.time.split(',')[1].trim();
+    const nowTimeStr = current_data.time.split(',')[2].slice(0, 9).trim();
 
     // Auto-scroll to just before current time
     useEffect(() => {

@@ -23,9 +23,9 @@ export default function Header({ changeData }) {
     // 3. Automatically push weather data up to the parent component when it finishes loading
     useEffect(() => {
         if (!loading && !weatherError && currentData) {
-            console.log("Current dataa",currentData)
+           
             changeData({ current: currentData, hourly: hourlyData, daily: dailyData  });
-            console.log("Weather data updated and passed to parent");
+           
         }
     }, [currentData, loading, weatherError]);
 
@@ -58,7 +58,7 @@ export default function Header({ changeData }) {
         // 4. Update coordinates, which automatically triggers the useWeather hook
         const selectedCity = validCities.find(item => item.city == formData.city);
         if (selectedCity) {
-            console.log("Selected city coordinates:", selectedCity);
+          
             setCoords({
                 latitude: Number(selectedCity.latitude),
                 longitude: Number(selectedCity.longitude)
@@ -155,19 +155,18 @@ export default function Header({ changeData }) {
                 ))}
             </datalist>
         </div>
-    <div className="w-full flex flex-wrap md:w-auto md:min-w-[25%] lg:flex-nowrap">
+    <div className="w-full flex flex-wrap   gap-4 md:min-w-l lg:flex-nowrap">
        <button 
     type="submit"
-    className="w-full lg:w-auto shrink-0 flex items-center justify-center gap-3 px-8 py-3.5 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 text-[var(--weather-text-main)] bg-[var(--weather-sunny)] hover:bg-gray-800 border border-gray-700/80 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_20px_rgba(59,130,246,0.15)] group"
+    className="w-full min-w-[100px] lg:w-auto shrink-0 flex items-center justify-center gap-3 px-8 py-3.5 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 text-[var(--weather-text-main)] bg-[var(--weather-sunny)] hover:bg-gray-800 border border-gray-700/80 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_20px_rgba(59,130,246,0.15)] group"
 >
-    <i className="wi wi-search text-base text-[var(--weather-rain)] transition-transform duration-300 group-hover:scale-120 group-hover:text-[var(--weather-sunny)]" />
-    <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--weather-text-main)] via-[var(--weather-text-sub)] to-[var(--weather-text-main)] bg-[length:200%_auto] group-hover:animate-pulse">
+    <span className="text-center bg-clip-text text-transparent bg-gradient-to-r from-[var(--weather-text-main)] via-[var(--weather-text-sub)] to-[var(--weather-text-main)] bg-[length:200%_auto] group-hover:animate-pulse">
         Search 
     </span>
 </button>
 <button
   type="button"
-  className="w-full shrink-0 rounded-xl border border-gray-700/80 bg-[var(--weather-text-sub)] px-8 py-3.5 text-xs font-black uppercase tracking-widest text-[var(--weather-text-main)] shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--weather-text-main)] hover:text-[var(--weather-bg)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_20px_rgba(59,130,246,0.15)] active:translate-y-0 lg:w-auto group"
+  className="w-full min-w-[100px] shrink-0 rounded-xl border border-gray-700/80 bg-[var(--weather-text-sub)] px-8 py-3.5 text-xs font-black uppercase tracking-widest text-[var(--weather-text-main)] shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--weather-text-main)] hover:text-[var(--weather-bg)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_20px_rgba(59,130,246,0.15)] active:translate-y-0 lg:w-auto group"
   onClick={handleClear}
 >
   <i className="wi wi-search text-base transition-transform duration-300 group-hover:scale-120 group-hover:text-[var(--weather-sunny)]" />

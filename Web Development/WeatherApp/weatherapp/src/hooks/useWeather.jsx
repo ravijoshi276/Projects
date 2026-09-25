@@ -21,7 +21,7 @@ export default function useWeather(latitude, longitude) {
 
             try {
                 const data = await getWeatherData(Number(latitude), Number(longitude));
-                console.log("This is data",data);
+              
                 if (!isMounted) return;
 
                 const cleanData = cleanRawData([{...data}]);
@@ -35,7 +35,7 @@ export default function useWeather(latitude, longitude) {
             } catch (err) {
                 if (isMounted) {
                     setError(true);
-                    console.error('Failed to fetch Weather data:', err);
+                   
                 }
             } finally {
                 if (isMounted) {

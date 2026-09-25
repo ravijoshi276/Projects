@@ -1,7 +1,7 @@
 import HourlyWeatherData from "./HourlyWeatherData"
 import CurrentWeather from "./CurrentWeather"
 export default function DisplayCard({hourlyData,dateToday,cleanedDailyData,current_units,selectedDate,currentData}){
-    console.log("This is current data data ",currentData)
+   
     if(dateToday===selectedDate){
          return <CurrentWeather 
                     daily_data={cleanedDailyData} 

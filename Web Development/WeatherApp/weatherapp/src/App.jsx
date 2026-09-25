@@ -51,9 +51,11 @@ function App() {
 
     <div className="relative z-10 w-full flex flex-col gap-12 items-center justify-center">
         
-        <div className="w-full transform transition-transform duration-500 hover:translate-y-[-1px] flex justify-center">
-            <Header changeData={changeData}/>
-        </div>
+         <div className="fixed top-0 left-0 z-50 w-full h-auto bg-white"> 
+        <Header changeData={changeData}/>
+    </div>
+
+    <div className="h-80 sm:h-18 md:h-16 w-full" aria-hidden="true"></div>
         
         {data ? (
             <div className="w-full rounded-2xl border border-gray-800/40 bg-[var(--weather-surface)]/30 backdrop-blur-md p-1 shadow-[0_15px_35px_-10px_rgba(0,0,0,0.5)] flex justify-center">

@@ -30,7 +30,6 @@ export const gorupByHourlyData = (hourlydata)=>{
     if(!hourlydata|| !(hourlydata?.time)) return;
 
     const datakeys= Object.keys(hourlydata)
-        console.log('cleaning data',datakeys)
     const groupedData ={};
     hourlydata.time.forEach((element,index) => {
         const datekey = element.split(',')[1].trim()
