@@ -39,7 +39,7 @@ const Header =({children})=>{
         }
         
     }catch(err){
-        console.error("Failed to logout")
+       // console.error("Failed to logout")
     }
     }
     const handleClick = ()=>{

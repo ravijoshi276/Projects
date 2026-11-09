@@ -13,7 +13,7 @@ export default function SingleItemPage (){
     const [isAdded,setIsAdded] = useState(false);
     const {menuData,categoryData} = useOutletContext();
     const itemData = menuData.results.find(item=>item.id===Number(id));
-    console.log("itemdata",itemData);
+    //console.log("itemdata",itemData);
     const category = categoryData.results.find(item=>item.id===itemData.category);
     const {addToCart} = useCart();
     

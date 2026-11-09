@@ -61,7 +61,7 @@ export default function Reservations({isManager=false}) {
             }, 3000);
             
         } catch (err) {
-            console.error("Failed to cancel reservation:", err);
+           // console.error("Failed to cancel reservation:", err);
         }
     };
 
@@ -87,7 +87,7 @@ export default function Reservations({isManager=false}) {
             }, 3000);
             
         } catch (err) {
-            console.error("Failed to cancel confirm:", err);
+           // console.error("Failed to cancel confirm:", err);
         }
     };
 

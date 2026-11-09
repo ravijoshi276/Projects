@@ -84,7 +84,7 @@ const handleSubmit = useCallback(async(id,deliveryCrew,status)=>{
             body:JSON.stringify({id:id,delivery_crew:deliveryCrew?Number(deliveryCrew):null,status:status})
             
         })
-        console.log("Patch Request",JSON.stringify({id:id,delivery_crew:deliveryCrew?Number(deliveryCrew):null,status:status===true?true:false}))
+        //console.log("Patch Request",JSON.stringify({id:id,delivery_crew:deliveryCrew?Number(deliveryCrew):null,status:status===true?true:false}))
         if(!response.ok){
             throw new Error("Error Submitting data ",response.status)
         }
@@ -153,23 +153,26 @@ const handleSearch = ()=>{
     return <main>
         <h1>Orders</h1>
         {isSubmitted?<div className="alert submitted success">Saved Successfully</div>:""}
-        <div>
+        <div className="border border-2 border-[var(--border-color)] rounded p-5 mt-10">
             <div className="search-filter">
                 <label for='id'>Search</label>
-                <input name='id' type="text" id='id' value={query.id} className='search-bar' placeholder="Search Order ID or DeliveyCrew Name" onChange={handleQuery}/>
+                <input name='id' type="text" id='id' value={query.id} className='search-bar mx-5' placeholder="Search Order ID or DeliveyCrew Name" onChange={handleQuery}/>
             </div>
             <div>
                 <label for='delivery_crew'>Deivery Crew</label>
-                <select name="delivery_crew" defaultValue={null} id="delivery_crew" value={query.delivery_crew} onChange={handleQuery}>
+                <select name="delivery_crew" defaultValue={null} id="delivery_crew" value={query.delivery_crew} onChange={handleQuery} className="mx-5 border border-2 border-[var(--border-color)] focus:outline focus:outline-2 focus:outline-[var(--color-secondary)]">
                     <option value={null}>No Delivery Crew</option>
                     {deliveryCrew?deliveryCrew.map(item=><option value={item.id}>{item.username}</option>):""}
                 </select>
             </div>
             <div>
                 <label for='status'>Delivered</label>
-                <input name='status' id='status' value={query.status} type='checkbox'  onChange={handleQuery}/>
+                <input name='status' id='status' value={query.status} type='checkbox'  onChange={handleQuery} className="mx-5"/>
             </div>
-            <div><button type="button" onClick={handleClear}>clear</button> <button type="button" onClick={handleSearch}>Search</button></div>
+            <div className="flex gap-10  w-full justify-end my-2">
+                <button type="button" onClick={handleClear} className="px-2 w-[100px] bg-[var(--bg-container)] text-[var(--text-main)] hover:opacity-85  ring-1 ring-[var(--border-color)] rounded">clear</button> 
+                <button type="button" onClick={handleSearch} className="px-2  w-[100px] bg-[var(--text-main)] text-[var(--bg-container)] hover:opacity-85  ring-1 ring-[var(--border-color)] rounded">Search</button>
+            </div>
         </div>
         <div className="order-cards">
         {itemCards}

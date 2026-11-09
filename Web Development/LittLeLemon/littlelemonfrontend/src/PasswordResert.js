@@ -62,7 +62,7 @@ export default function PasswordReset() {
 
         } catch (err) {
             setError(true);
-            console.error("Password reset error:", err);
+            //console.error("Password reset error:", err);
         }
     };
 

@@ -63,7 +63,7 @@ export default function Profile() {
                 setError(true);
             }
         } catch (err) {
-            console.error("Profile update error:", err);
+            //console.error("Profile update error:", err);
             setError(true);
         }
     };

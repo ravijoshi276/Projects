@@ -22,7 +22,7 @@ const itemData = menuData?menuData.results.filter(item=>{
     }}
 ):null;
 const deleteItem= async (id)=>{
-    console.log("clicked");
+    //console.log("clicked");
     setError(false);
     try {
         const response = await fetch(`${BASE_URL}/api/menu-items/${id}`,{

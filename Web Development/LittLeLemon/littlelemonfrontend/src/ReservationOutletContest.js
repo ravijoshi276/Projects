@@ -16,7 +16,7 @@ export default function ReservationOutletContext(){
             };
             axios.get(`${BASE_URL}/api/reservations`, config)
                 .then(res => setReservationData(res.data.results.toReversed() || res.data))
-                .catch(err => console.error(err));
+                .catch(err => //console.error(err));
         }, [token])
         
        

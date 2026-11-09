@@ -81,7 +81,7 @@ export default function SingleReservationPage() {
   useEffect(() => {
     axios.get(`${BASE_URL}/api/tables`)
       .then(response => setTables(response.data.results || response.data))
-      .catch(err => console.error("Error fetching tables:", err));
+      .catch(err => //console.error("Error fetching tables:", err));
   }, []);
 
   //  3. Clean dependency array prevents resetting your edits
@@ -129,7 +129,7 @@ export default function SingleReservationPage() {
       setSubmitted(true);
       // NOTE: Removed setStartTime("") and setEndTime("") so choices don't disappear on submit click!
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       if (err.response) {
         setError(err.response.data);
       } else if (err.request) {

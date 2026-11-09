@@ -48,7 +48,7 @@ export default function Orders() {
                     setError(true);
                 }
             } catch (err) {
-                console.error("Failed to fetch orders:", err);
+                //console.error("Failed to fetch orders:", err);
                 setError(true);
             } finally {
                 setLoading(false);

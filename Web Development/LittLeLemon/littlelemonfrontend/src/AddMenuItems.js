@@ -70,7 +70,7 @@ export default function AddMenuItems(){
    
 
 } catch (error) {
-    console.error("Failed to fetch or compress image URL. Check CORS headers on the image host:", error);
+    //console.error("Failed to fetch or compress image URL. Check CORS headers on the image host:", error);
    
 } finally{
     setIsCompressing(false);

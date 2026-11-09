@@ -97,7 +97,7 @@ function SignupForm() {
       }
     } catch (err) {
       setError(true);
-      console.log(err);
+      //console.log(err);
     }
   };
 

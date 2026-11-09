@@ -41,7 +41,7 @@ useEffect(()=>{
     setcategoryData(data);
   setLoading(false);}
 ).catch((err)=>{
-console.error(err);
+//console.error(err);
   })
 },[categoryTrigger])
 
@@ -55,11 +55,11 @@ console.error(err);
    return response.json();
   }
   ).then((data)=>{
-    console.log("data fetched",data);
+    //console.log("data fetched",data);
     setmenuData(data);
   setLoading(false);}
 ).catch((err)=>{
-console.error(err);
+//console.error(err);
   })
 },[menuTrigger])
 if (loading ||!menuData || !categoryData) return <p>Loading menu items...</p>;

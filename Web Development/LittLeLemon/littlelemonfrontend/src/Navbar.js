@@ -95,11 +95,11 @@ const Navitems = () => {
     const toggleMenu = () => setIsOpen(prev => !prev);
     const closeMenu = () => setIsOpen(false);
 
-    // Optimized: Leverage react-router-dom's native class function cleanly
+   
     const getLinkStyle = ({ isActive }) => `
         block text-center py-2 px-4 transition-all duration-200 w-full sm:w-auto sm:rounded-md font-medium
         ${isActive 
-            ? 'bg-[var(--bg-active-container)] text-[var(--text-active)] ring-1 ring-[var(--border-color)]' 
+            ? 'ring-1 ring-[var(--border-color)]' 
             : 'bg-[var(--bg-container)] text-[var(--text-main)] hover:opacity-85'
         }
     `.trim();
@@ -114,7 +114,7 @@ const Navitems = () => {
     return (
         <nav className="sticky top-0 z-50 w-full bg-[var(--bg-surface)] border-b border-[var(--border-color)] px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-colors duration-200">
             
-            {/* Header Area (Brand & Accessible Toggle) */}
+        
             <div className="flex items-center justify-between w-full sm:w-auto sm:hidden">
                 <span className="text-xl font-bold tracking-tight text-[var(--text-main)]">
                     Little <span className='lemon'>Lemon</span>

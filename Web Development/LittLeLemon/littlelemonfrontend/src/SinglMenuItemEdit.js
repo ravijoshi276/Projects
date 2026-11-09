@@ -27,7 +27,7 @@ export default function SingleMenuItemEdit(){
     const [isChecked,setIsChecked] = useState(itemData.featured);
     const handleChange = (e)=>{
         setItem((prev)=>{return {...prev,[e.target.name]:e.target.name==="category"?Number(e.target.value):e.target.value}});
-        console.log(item);
+        //console.log(item);
     }
     const handleSubmit = async(e)=>{
         e.preventDefault();
@@ -66,7 +66,7 @@ export default function SingleMenuItemEdit(){
             setTimeout(()=>{
                 navigate(-1)
             },2000)} catch(err){
-            console.error(err);
+            //console.error(err);
             setError(true);
         }
     }
@@ -95,7 +95,7 @@ export default function SingleMenuItemEdit(){
             const file = new File([compressedBlob], `${item.title || 'menu_item'}.jpg`, { type: "image/jpeg" });
             setCompressedFile(file);
         } catch (err) {
-            console.error("Failed to fetch or compress image from URL:", err);
+            //console.error("Failed to fetch or compress image from URL:", err);
         } finally {
             setIsCompressing(false);
         }

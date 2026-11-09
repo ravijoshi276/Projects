@@ -64,15 +64,15 @@ export default function AddEditGroups(props){
 
             
         }catch(err){
-            console.log(err);
+           // console.log(err);
         }
     }
     const handleChange =(e)=>{
         const value =e.target.value;
         const name = e.target.name;
-        startTransition(()=>{
-            name==='username'?setUsername(value):setQuery(value);
-        })
+        if(name==='username'){startTransition(()=>setUsername(value)
+        )}
+        else{setQuery(value)};
 
     }
     const deleteManager = async(id,username)=>{
@@ -95,18 +95,18 @@ export default function AddEditGroups(props){
                 setIsDeleted(false);
             },3000)
         }catch(err){
-            console.error(err);
+            //console.error(err);
         }
     }
     const itemData =  managers.filter((item)=>{
-        if(query.trim().length===0){
+        if(username.trim().length===0){
             return item;
         }else {
             const  uname = item.username.toLowerCase();
             const fname = item.first_name.toLowerCase();
             const lname = item.last_name.toLowerCase();
             const email = item.email.toLowerCase();
-            const toSearch = query.trim().toLowerCase();
+            const toSearch = username.trim().toLowerCase();
             if(uname.includes(toSearch) || fname.includes(toSearch) || lname.includes(toSearch) || email.includes(toSearch)){
                 return item;
 
@@ -120,12 +120,14 @@ export default function AddEditGroups(props){
     return( <main className={props.title +"-page"}>
         <div>
         <Heading>{props.title}</Heading>
-        <div className='search-bar-cover'><span>Search </span><input className='search-bar' type='text' onChange={handleChange} value={query} placeholder="Search person"/></div>
+        <div className='search-bar-cover'><span>Search </span>
+        <input className='search-bar' type='text' onChange={handleChange} name='username' value={username} placeholder="Search person"/></div>
         {isDeleted||successfullyAdded?<div className={successfullyAdded?"alert success":'alert'}>{props.title} {isDeleted?"Deleted Sucessfully":"Added Successfully"}</div>:""}
         </div>
         <div id="add-user">
             <span className="bold">Add {props.title}</span> 
-            <input type="text" name="username" value={username}  placeholder="Enter Username" onChange={handleChange}></input> <button type="button" onClick={handleAdd} className="add-btn"  >Add</button>
+            <input type="text" name="query" value={query}  placeholder="Enter Username" onChange={handleChange}></input> 
+            <button type="button" onClick={handleAdd} className="px-2 w-[100px] bg-[var(--bg-container)] text-[var(--text-main)] hover:opacity-85  ring-1 ring-[var(--border-color)] rounded"  >Add</button>
         </div>
         <div>
             {isPending?<div>Loading........</div>:""}
