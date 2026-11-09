@@ -81,7 +81,7 @@ export default function SingleReservationPage() {
   useEffect(() => {
     axios.get(`${BASE_URL}/api/tables`)
       .then(response => setTables(response.data.results || response.data))
-      .catch(err => //console.error("Error fetching tables:", err));
+      .catch(err => {});//console.error("Error fetching tables:", err)
   }, []);
 
   //  3. Clean dependency array prevents resetting your edits

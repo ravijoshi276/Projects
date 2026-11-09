@@ -75,7 +75,7 @@ const ReservationForm = () => {
     useEffect(() => {
       axios.get(`${BASE_URL}/api/tables`)
         .then(response => setTables(response.data.results || response.data))
-        .catch(err => //console.error('Error fetching tables:', err));
+        .catch(err =>{});//console.error('Error fetching tables:', err)
     }, []);
 
     const handleChange = (e) => {
